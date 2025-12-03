@@ -1,0 +1,388 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formrekap.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formrekap.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formpenilaianperilakudosen.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formpenilaianperilakudosen.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formverifikasipenilaian.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formverifikasipenilaian.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formverifikasipenilaian.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formverifikasipenilaian.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formpenilaianperilakudosen.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formpenilaianperilakudosen.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formrekap.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formrekap.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formregistrasidosen.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formregistrasidosen.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formdashboard.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formdashboard.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formdashboard.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formdashboard.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formdashboard.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formdashboard.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\moduleauth.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\moduleauth.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formdashboard.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formdashboard.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formlogin.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formlogin.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formregistrasidosen.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formregistrasidosen.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\modulekoneksi.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\modulekoneksi.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formlogin.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formlogin.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\applicationevents.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\applicationevents.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\pbl_2.vbproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\pbl_2.vbproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formregistrasidosen.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formregistrasidosen.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formlogin.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formlogin.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formverifikasipenilaian.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formverifikasipenilaian.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|c:\\users\\user\\onedrive\\documents\\semester 3\\pnj\\pbl uas\\pv\\pbl_2\\pbl_2\\formpenilaianperilakudosen.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{93BDDBFB-F1A2-4394-8F69-C6DD51D0EE15}|PBL_2\\PBL_2.vbproj|solutionrelative:pbl_2\\formpenilaianperilakudosen.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FormVerifikasiPenilaian.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormVerifikasiPenilaian.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormVerifikasiPenilaian.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormVerifikasiPenilaian.vb",
+              "RelativeToolTip": "PBL_2\\FormVerifikasiPenilaian.vb",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAMwDQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-29T08:37:19.389Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormPenilaianPerilakuDosen.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormPenilaianPerilakuDosen.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormPenilaianPerilakuDosen.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormPenilaianPerilakuDosen.vb [Design]",
+              "RelativeToolTip": "PBL_2\\FormPenilaianPerilakuDosen.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T14:58:31.636Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FormVerifikasiPenilaian.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormVerifikasiPenilaian.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormVerifikasiPenilaian.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormVerifikasiPenilaian.vb [Design]",
+              "RelativeToolTip": "PBL_2\\FormVerifikasiPenilaian.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-12-02T12:23:36.192Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FormRekap.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRekap.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormRekap.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRekap.vb [Design]",
+              "RelativeToolTip": "PBL_2\\FormRekap.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-12-02T12:25:15.095Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FormPenilaianPerilakuDosen.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormPenilaianPerilakuDosen.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormPenilaianPerilakuDosen.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormPenilaianPerilakuDosen.vb",
+              "RelativeToolTip": "PBL_2\\FormPenilaianPerilakuDosen.vb",
+              "ViewState": "AgIAAPQAAAAAAAAAAAAMwAoBAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-29T01:16:19.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FormRekap.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRekap.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormRekap.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRekap.vb",
+              "RelativeToolTip": "PBL_2\\FormRekap.vb",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAWwGAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-12-02T11:50:36.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FormRegistrasiDosen.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRegistrasiDosen.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormRegistrasiDosen.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRegistrasiDosen.vb [Design]",
+              "RelativeToolTip": "PBL_2\\FormRegistrasiDosen.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T18:15:56.09Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FormDashboard.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormDashboard.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormDashboard.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormDashboard.vb",
+              "RelativeToolTip": "PBL_2\\FormDashboard.vb",
+              "ViewState": "AgIAAEAAAAAAAAAAAIAwwFUAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-29T02:08:31.862Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FormDashboard.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormDashboard.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormDashboard.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormDashboard.vb [Design]",
+              "RelativeToolTip": "PBL_2\\FormDashboard.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T15:28:43.385Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "FormDashboard.Designer.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormDashboard.Designer.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormDashboard.Designer.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormDashboard.Designer.vb",
+              "RelativeToolTip": "PBL_2\\FormDashboard.Designer.vb",
+              "ViewState": "AgIAAMgAAAAAAAAAAAAYwOoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T15:30:55.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ModuleAuth.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\ModuleAuth.vb",
+              "RelativeDocumentMoniker": "PBL_2\\ModuleAuth.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\ModuleAuth.vb",
+              "RelativeToolTip": "PBL_2\\ModuleAuth.vb",
+              "ViewState": "AgIAAAMAAAAAAAAAAAA7wAoAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-29T01:57:07.422Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FormDashboard.resx",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormDashboard.resx",
+              "RelativeDocumentMoniker": "PBL_2\\FormDashboard.resx",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormDashboard.resx",
+              "RelativeToolTip": "PBL_2\\FormDashboard.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-12-01T07:14:14.09Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "FormLogin.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormLogin.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormLogin.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormLogin.vb [Design]",
+              "RelativeToolTip": "PBL_2\\FormLogin.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T14:58:24.746Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "FormRegistrasiDosen.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRegistrasiDosen.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormRegistrasiDosen.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRegistrasiDosen.vb",
+              "RelativeToolTip": "PBL_2\\FormRegistrasiDosen.vb",
+              "ViewState": "AgIAAHsAAAAAAAAAAIA7wIwAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T18:47:59.775Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ModuleKoneksi.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\ModuleKoneksi.vb",
+              "RelativeDocumentMoniker": "PBL_2\\ModuleKoneksi.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\ModuleKoneksi.vb",
+              "RelativeToolTip": "PBL_2\\ModuleKoneksi.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-29T01:55:32.677Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FormLogin.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormLogin.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormLogin.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormLogin.vb",
+              "RelativeToolTip": "PBL_2\\FormLogin.vb",
+              "ViewState": "AgIAADgAAAAAAAAAAAAgwDIAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T14:55:41.974Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PBL_2.vbproj",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\PBL_2.vbproj",
+              "RelativeDocumentMoniker": "PBL_2\\PBL_2.vbproj",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\PBL_2.vbproj",
+              "RelativeToolTip": "PBL_2\\PBL_2.vbproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003380|",
+              "WhenOpened": "2025-11-26T18:58:45.866Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ApplicationEvents.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\ApplicationEvents.vb",
+              "RelativeDocumentMoniker": "PBL_2\\ApplicationEvents.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\ApplicationEvents.vb",
+              "RelativeToolTip": "PBL_2\\ApplicationEvents.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T18:58:48.9Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "FormRegistrasiDosen.Designer.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRegistrasiDosen.Designer.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormRegistrasiDosen.Designer.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormRegistrasiDosen.Designer.vb",
+              "RelativeToolTip": "PBL_2\\FormRegistrasiDosen.Designer.vb",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAhwBMAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T18:16:01.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "FormLogin.Designer.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormLogin.Designer.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormLogin.Designer.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormLogin.Designer.vb",
+              "RelativeToolTip": "PBL_2\\FormLogin.Designer.vb",
+              "ViewState": "AgIAAN8AAAAAAAAAAAAgwPwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T14:43:11.302Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "FormVerifikasiPenilaian.Designer.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormVerifikasiPenilaian.Designer.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormVerifikasiPenilaian.Designer.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormVerifikasiPenilaian.Designer.vb",
+              "RelativeToolTip": "PBL_2\\FormVerifikasiPenilaian.Designer.vb",
+              "ViewState": "AgIAAOoAAAAAAAAAAAApwPsAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T18:07:02.421Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "FormPenilaianPerilakuDosen.Designer.vb",
+              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormPenilaianPerilakuDosen.Designer.vb",
+              "RelativeDocumentMoniker": "PBL_2\\FormPenilaianPerilakuDosen.Designer.vb",
+              "ToolTip": "C:\\Users\\user\\OneDrive\\Documents\\Semester 3\\PNJ\\PBL UAS\\PV\\PBL_2\\PBL_2\\FormPenilaianPerilakuDosen.Designer.vb",
+              "RelativeToolTip": "PBL_2\\FormPenilaianPerilakuDosen.Designer.vb",
+              "ViewState": "AgIAANkAAAAAAAAAAAApwAsBAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-11-26T14:45:56.211Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
