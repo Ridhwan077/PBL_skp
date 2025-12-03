@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("PBL_2"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d32eefc79bc5270983a5c2b8b04f8d74e33dd43"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("PBL_2"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("PBL_2"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _

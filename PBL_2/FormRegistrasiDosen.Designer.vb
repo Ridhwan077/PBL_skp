@@ -46,7 +46,7 @@ Partial Class FormRegistrasiDosen
         ' 
         ' pnlForm
         ' 
-        pnlForm.BackColor = Color.FromArgb(CByte(245), CByte(240), CByte(232))
+        pnlForm.BackColor = Color.FromArgb(CByte(240), CByte(233), CByte(221))
         pnlForm.Controls.Add(lblTitle)
         pnlForm.Controls.Add(lblSubTitle)
         pnlForm.Controls.Add(lblNIP)
@@ -68,10 +68,10 @@ Partial Class FormRegistrasiDosen
         pnlForm.Controls.Add(btnSimpan)
         pnlForm.Dock = DockStyle.Fill
         pnlForm.Location = New Point(0, 0)
-        pnlForm.Margin = New Padding(5)
+        pnlForm.Margin = New Padding(3, 2, 3, 2)
         pnlForm.Name = "pnlForm"
-        pnlForm.Padding = New Padding(65, 64, 65, 64)
-        pnlForm.Size = New Size(749, 832)
+        pnlForm.Padding = New Padding(35, 30, 35, 30)
+        pnlForm.Size = New Size(403, 390)
         pnlForm.TabIndex = 0
         ' 
         ' lblTitle
@@ -79,10 +79,9 @@ Partial Class FormRegistrasiDosen
         lblTitle.AutoSize = True
         lblTitle.Font = New Font("Segoe UI Semibold", 16F, FontStyle.Bold)
         lblTitle.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblTitle.Location = New Point(65, 64)
-        lblTitle.Margin = New Padding(5, 0, 5, 0)
+        lblTitle.Location = New Point(35, 30)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(350, 59)
+        lblTitle.Size = New Size(177, 30)
         lblTitle.TabIndex = 0
         lblTitle.Text = "Registrasi Dosen"
         ' 
@@ -91,10 +90,9 @@ Partial Class FormRegistrasiDosen
         lblSubTitle.AutoSize = True
         lblSubTitle.Font = New Font("Segoe UI", 9F)
         lblSubTitle.ForeColor = Color.FromArgb(CByte(120), CByte(120), CByte(120))
-        lblSubTitle.Location = New Point(68, 128)
-        lblSubTitle.Margin = New Padding(5, 0, 5, 0)
+        lblSubTitle.Location = New Point(37, 60)
         lblSubTitle.Name = "lblSubTitle"
-        lblSubTitle.Size = New Size(554, 32)
+        lblSubTitle.Size = New Size(275, 15)
         lblSubTitle.TabIndex = 1
         lblSubTitle.Text = "Masukkan data di bawah ini untuk membuat akun."
         ' 
@@ -103,10 +101,9 @@ Partial Class FormRegistrasiDosen
         lblNIP.AutoSize = True
         lblNIP.Font = New Font("Segoe UI", 9F)
         lblNIP.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblNIP.Location = New Point(68, 192)
-        lblNIP.Margin = New Padding(5, 0, 5, 0)
+        lblNIP.Location = New Point(37, 90)
         lblNIP.Name = "lblNIP"
-        lblNIP.Size = New Size(51, 32)
+        lblNIP.Size = New Size(26, 15)
         lblNIP.TabIndex = 2
         lblNIP.Text = "NIP"
         ' 
@@ -115,10 +112,10 @@ Partial Class FormRegistrasiDosen
         txtNIP.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         txtNIP.BorderStyle = BorderStyle.FixedSingle
         txtNIP.Font = New Font("Segoe UI", 9F)
-        txtNIP.Location = New Point(260, 184)
-        txtNIP.Margin = New Padding(5)
+        txtNIP.Location = New Point(140, 86)
+        txtNIP.Margin = New Padding(3, 2, 3, 2)
         txtNIP.Name = "txtNIP"
-        txtNIP.Size = New Size(358, 39)
+        txtNIP.Size = New Size(194, 23)
         txtNIP.TabIndex = 3
         ' 
         ' lblNama
@@ -126,10 +123,9 @@ Partial Class FormRegistrasiDosen
         lblNama.AutoSize = True
         lblNama.Font = New Font("Segoe UI", 9F)
         lblNama.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblNama.Location = New Point(68, 256)
-        lblNama.Margin = New Padding(5, 0, 5, 0)
+        lblNama.Location = New Point(37, 120)
         lblNama.Name = "lblNama"
-        lblNama.Size = New Size(152, 32)
+        lblNama.Size = New Size(75, 15)
         lblNama.TabIndex = 4
         lblNama.Text = "Nama Dosen"
         ' 
@@ -138,10 +134,10 @@ Partial Class FormRegistrasiDosen
         txtNama.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         txtNama.BorderStyle = BorderStyle.FixedSingle
         txtNama.Font = New Font("Segoe UI", 9F)
-        txtNama.Location = New Point(260, 248)
-        txtNama.Margin = New Padding(5)
+        txtNama.Location = New Point(140, 116)
+        txtNama.Margin = New Padding(3, 2, 3, 2)
         txtNama.Name = "txtNama"
-        txtNama.Size = New Size(358, 39)
+        txtNama.Size = New Size(194, 23)
         txtNama.TabIndex = 5
         ' 
         ' lblProdi
@@ -149,10 +145,9 @@ Partial Class FormRegistrasiDosen
         lblProdi.AutoSize = True
         lblProdi.Font = New Font("Segoe UI", 9F)
         lblProdi.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblProdi.Location = New Point(68, 320)
-        lblProdi.Margin = New Padding(5, 0, 5, 0)
+        lblProdi.Location = New Point(37, 150)
         lblProdi.Name = "lblProdi"
-        lblProdi.Size = New Size(165, 32)
+        lblProdi.Size = New Size(83, 15)
         lblProdi.TabIndex = 6
         lblProdi.Text = "Program Studi"
         ' 
@@ -162,10 +157,10 @@ Partial Class FormRegistrasiDosen
         cboProdi.DropDownStyle = ComboBoxStyle.DropDownList
         cboProdi.Font = New Font("Segoe UI", 9F)
         cboProdi.Items.AddRange(New Object() {"TI", "TMD", "TMJ"})
-        cboProdi.Location = New Point(260, 312)
-        cboProdi.Margin = New Padding(5)
+        cboProdi.Location = New Point(140, 146)
+        cboProdi.Margin = New Padding(3, 2, 3, 2)
         cboProdi.Name = "cboProdi"
-        cboProdi.Size = New Size(357, 40)
+        cboProdi.Size = New Size(194, 23)
         cboProdi.TabIndex = 7
         ' 
         ' lblEmail
@@ -173,10 +168,9 @@ Partial Class FormRegistrasiDosen
         lblEmail.AutoSize = True
         lblEmail.Font = New Font("Segoe UI", 9F)
         lblEmail.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblEmail.Location = New Point(68, 384)
-        lblEmail.Margin = New Padding(5, 0, 5, 0)
+        lblEmail.Location = New Point(37, 180)
         lblEmail.Name = "lblEmail"
-        lblEmail.Size = New Size(71, 32)
+        lblEmail.Size = New Size(36, 15)
         lblEmail.TabIndex = 8
         lblEmail.Text = "Email"
         ' 
@@ -185,10 +179,10 @@ Partial Class FormRegistrasiDosen
         txtEmail.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         txtEmail.BorderStyle = BorderStyle.FixedSingle
         txtEmail.Font = New Font("Segoe UI", 9F)
-        txtEmail.Location = New Point(260, 376)
-        txtEmail.Margin = New Padding(5)
+        txtEmail.Location = New Point(140, 176)
+        txtEmail.Margin = New Padding(3, 2, 3, 2)
         txtEmail.Name = "txtEmail"
-        txtEmail.Size = New Size(358, 39)
+        txtEmail.Size = New Size(194, 23)
         txtEmail.TabIndex = 9
         ' 
         ' lblNoHP
@@ -196,10 +190,9 @@ Partial Class FormRegistrasiDosen
         lblNoHP.AutoSize = True
         lblNoHP.Font = New Font("Segoe UI", 9F)
         lblNoHP.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblNoHP.Location = New Point(68, 448)
-        lblNoHP.Margin = New Padding(5, 0, 5, 0)
+        lblNoHP.Location = New Point(37, 210)
         lblNoHP.Name = "lblNoHP"
-        lblNoHP.Size = New Size(155, 32)
+        lblNoHP.Size = New Size(77, 15)
         lblNoHP.TabIndex = 10
         lblNoHP.Text = "No. HP / Telp"
         ' 
@@ -208,10 +201,10 @@ Partial Class FormRegistrasiDosen
         txtNoHP.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         txtNoHP.BorderStyle = BorderStyle.FixedSingle
         txtNoHP.Font = New Font("Segoe UI", 9F)
-        txtNoHP.Location = New Point(260, 440)
-        txtNoHP.Margin = New Padding(5)
+        txtNoHP.Location = New Point(140, 206)
+        txtNoHP.Margin = New Padding(3, 2, 3, 2)
         txtNoHP.Name = "txtNoHP"
-        txtNoHP.Size = New Size(358, 39)
+        txtNoHP.Size = New Size(194, 23)
         txtNoHP.TabIndex = 11
         ' 
         ' lblPassword
@@ -219,10 +212,9 @@ Partial Class FormRegistrasiDosen
         lblPassword.AutoSize = True
         lblPassword.Font = New Font("Segoe UI", 9F)
         lblPassword.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblPassword.Location = New Point(68, 512)
-        lblPassword.Margin = New Padding(5, 0, 5, 0)
+        lblPassword.Location = New Point(37, 240)
         lblPassword.Name = "lblPassword"
-        lblPassword.Size = New Size(111, 32)
+        lblPassword.Size = New Size(57, 15)
         lblPassword.TabIndex = 12
         lblPassword.Text = "Password"
         ' 
@@ -231,11 +223,11 @@ Partial Class FormRegistrasiDosen
         txtPassword.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         txtPassword.BorderStyle = BorderStyle.FixedSingle
         txtPassword.Font = New Font("Segoe UI", 9F)
-        txtPassword.Location = New Point(260, 504)
-        txtPassword.Margin = New Padding(5)
+        txtPassword.Location = New Point(140, 236)
+        txtPassword.Margin = New Padding(3, 2, 3, 2)
         txtPassword.Name = "txtPassword"
         txtPassword.PasswordChar = "*"c
-        txtPassword.Size = New Size(358, 39)
+        txtPassword.Size = New Size(194, 23)
         txtPassword.TabIndex = 13
         ' 
         ' lblKonfirmasi
@@ -243,10 +235,9 @@ Partial Class FormRegistrasiDosen
         lblKonfirmasi.AutoSize = True
         lblKonfirmasi.Font = New Font("Segoe UI", 9F)
         lblKonfirmasi.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblKonfirmasi.Location = New Point(68, 576)
-        lblKonfirmasi.Margin = New Padding(5, 0, 5, 0)
+        lblKonfirmasi.Location = New Point(37, 270)
         lblKonfirmasi.Name = "lblKonfirmasi"
-        lblKonfirmasi.Size = New Size(230, 32)
+        lblKonfirmasi.Size = New Size(117, 15)
         lblKonfirmasi.TabIndex = 14
         lblKonfirmasi.Text = "Konfirmasi Password"
         ' 
@@ -255,11 +246,11 @@ Partial Class FormRegistrasiDosen
         txtKonfirmasi.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         txtKonfirmasi.BorderStyle = BorderStyle.FixedSingle
         txtKonfirmasi.Font = New Font("Segoe UI", 9F)
-        txtKonfirmasi.Location = New Point(312, 568)
-        txtKonfirmasi.Margin = New Padding(5)
+        txtKonfirmasi.Location = New Point(168, 266)
+        txtKonfirmasi.Margin = New Padding(3, 2, 3, 2)
         txtKonfirmasi.Name = "txtKonfirmasi"
         txtKonfirmasi.PasswordChar = "*"c
-        txtKonfirmasi.Size = New Size(306, 39)
+        txtKonfirmasi.Size = New Size(166, 23)
         txtKonfirmasi.TabIndex = 15
         ' 
         ' btnBatal
@@ -270,10 +261,10 @@ Partial Class FormRegistrasiDosen
         btnBatal.FlatStyle = FlatStyle.Flat
         btnBatal.Font = New Font("Segoe UI", 9F)
         btnBatal.ForeColor = Color.FromArgb(CByte(211), CByte(47), CByte(47))
-        btnBatal.Location = New Point(65, 688)
-        btnBatal.Margin = New Padding(5)
+        btnBatal.Location = New Point(35, 322)
+        btnBatal.Margin = New Padding(3, 2, 3, 2)
         btnBatal.Name = "btnBatal"
-        btnBatal.Size = New Size(146, 54)
+        btnBatal.Size = New Size(79, 25)
         btnBatal.TabIndex = 16
         btnBatal.Text = "Batal"
         btnBatal.UseVisualStyleBackColor = False
@@ -286,10 +277,10 @@ Partial Class FormRegistrasiDosen
         btnReset.FlatStyle = FlatStyle.Flat
         btnReset.Font = New Font("Segoe UI", 9F)
         btnReset.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        btnReset.Location = New Point(271, 688)
-        btnReset.Margin = New Padding(5)
+        btnReset.Location = New Point(146, 322)
+        btnReset.Margin = New Padding(3, 2, 3, 2)
         btnReset.Name = "btnReset"
-        btnReset.Size = New Size(146, 54)
+        btnReset.Size = New Size(79, 25)
         btnReset.TabIndex = 17
         btnReset.Text = "Reset"
         btnReset.UseVisualStyleBackColor = False
@@ -302,10 +293,10 @@ Partial Class FormRegistrasiDosen
         btnSimpan.FlatStyle = FlatStyle.Flat
         btnSimpan.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnSimpan.ForeColor = Color.White
-        btnSimpan.Location = New Point(427, 688)
-        btnSimpan.Margin = New Padding(5)
+        btnSimpan.Location = New Point(230, 322)
+        btnSimpan.Margin = New Padding(3, 2, 3, 2)
         btnSimpan.Name = "btnSimpan"
-        btnSimpan.Size = New Size(192, 54)
+        btnSimpan.Size = New Size(103, 25)
         btnSimpan.TabIndex = 18
         btnSimpan.Text = "Daftar"
         btnSimpan.UseVisualStyleBackColor = False
@@ -316,22 +307,21 @@ Partial Class FormRegistrasiDosen
         pnlSide.Controls.Add(lblWelcomeTitle)
         pnlSide.Controls.Add(lblWelcomeSub)
         pnlSide.Dock = DockStyle.Right
-        pnlSide.Location = New Point(749, 0)
-        pnlSide.Margin = New Padding(5)
+        pnlSide.Location = New Point(403, 0)
+        pnlSide.Margin = New Padding(3, 2, 3, 2)
         pnlSide.Name = "pnlSide"
-        pnlSide.Padding = New Padding(52, 64, 52, 64)
-        pnlSide.Size = New Size(551, 832)
+        pnlSide.Padding = New Padding(28, 30, 28, 30)
+        pnlSide.Size = New Size(297, 390)
         pnlSide.TabIndex = 1
         ' 
         ' lblWelcomeTitle
         ' 
         lblWelcomeTitle.Anchor = AnchorStyles.None
-        lblWelcomeTitle.Font = New Font("Segoe UI Semibold", 20.0F, FontStyle.Bold)
+        lblWelcomeTitle.Font = New Font("Segoe UI Semibold", 20F, FontStyle.Bold)
         lblWelcomeTitle.ForeColor = Color.White
-        lblWelcomeTitle.Location = New Point(99, 256)
-        lblWelcomeTitle.Margin = New Padding(5, 0, 5, 0)
+        lblWelcomeTitle.Location = New Point(53, 120)
         lblWelcomeTitle.Name = "lblWelcomeTitle"
-        lblWelcomeTitle.Size = New Size(403, 96)
+        lblWelcomeTitle.Size = New Size(217, 45)
         lblWelcomeTitle.TabIndex = 0
         lblWelcomeTitle.Text = "Hallo, Dosen!"
         lblWelcomeTitle.TextAlign = ContentAlignment.MiddleLeft
@@ -341,25 +331,24 @@ Partial Class FormRegistrasiDosen
         lblWelcomeSub.Anchor = AnchorStyles.None
         lblWelcomeSub.Font = New Font("Segoe UI", 10F)
         lblWelcomeSub.ForeColor = Color.WhiteSmoke
-        lblWelcomeSub.Location = New Point(99, 352)
-        lblWelcomeSub.Margin = New Padding(5, 0, 5, 0)
+        lblWelcomeSub.Location = New Point(53, 165)
         lblWelcomeSub.Name = "lblWelcomeSub"
-        lblWelcomeSub.Size = New Size(403, 112)
+        lblWelcomeSub.Size = New Size(217, 52)
         lblWelcomeSub.TabIndex = 1
         lblWelcomeSub.Text = "Lengkapi registrasi Anda untuk mulai menggunakan sistem."
         ' 
         ' FormRegistrasiDosen
         ' 
         AcceptButton = btnSimpan
-        AutoScaleDimensions = New SizeF(13F, 32F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(245), CByte(240), CByte(232))
         CancelButton = btnBatal
-        ClientSize = New Size(1300, 832)
+        ClientSize = New Size(700, 390)
         Controls.Add(pnlForm)
         Controls.Add(pnlSide)
         FormBorderStyle = FormBorderStyle.FixedDialog
-        Margin = New Padding(5)
+        Margin = New Padding(3, 2, 3, 2)
         MaximizeBox = False
         Name = "FormRegistrasiDosen"
         StartPosition = FormStartPosition.CenterScreen

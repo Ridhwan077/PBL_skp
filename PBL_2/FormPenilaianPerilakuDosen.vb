@@ -1,6 +1,11 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class FormPenilaianPerilakuDosen
+
+    Public Sub New()
+        InitializeComponent()
+    End Sub
+
     Private _roleUser As String
     Private _namaUser As String
 
