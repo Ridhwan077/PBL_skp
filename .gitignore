@@ -1,0 +1,97 @@
+## =====================================================
+## Visual Studio / VB.NET Git Ignore Template
+## =====================================================
+
+# Visual Studio cache & user settings
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# NuGet
+*.nupkg
+*.snupkg
+artifacts/
+project.lock.json
+project.fragment.lock.json
+**/project.assets.json
+**/*.nuget.cache
+**/*.dgspec.json
+.nuget/
+
+# MSBuild
+*.cache
+*.db
+*.ide
+*.tlog
+*.tmp
+*.lastcodeanalysissucceeded
+*.FileListAbsolute.txt
+
+# VS auto-generated files
+*.vshost.*
+*.vsidx
+*.v9.bin
+*.resource
+*.resjson
+
+# Temporary Files
+*.tmp
+*.bak
+*.old
+*.orig
+
+# IIS Express
+IISExpress/
+*.template
+*~.cache
+*.dbmdl
+
+# JetBrains Rider / ReSharper
+.idea/
+*.DotSettings.user
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings
+
+# Coverage & analysis
+*.coverage
+*.coveragexml
+TestResults/
+*.codeanalysis
+
+# Windows Form Auto Saves
+*.Designer.cs~
+*.Designer.vb~
+
+# Publish folders (auto-generated)
+publish/
+app.publish/
+
+# Others
+*.psess
+*.vsp
+*.vspscc
+*.vssscc
+*.pdb
+*.mdb
+
+# Local history (VS Code extension)
+.history/
+
+## =====================================================
+## END OF FILE
+## =====================================================
