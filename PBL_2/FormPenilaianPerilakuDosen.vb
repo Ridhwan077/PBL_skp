@@ -1,558 +1,731 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.Drawing.Printing
+Imports System.IO
+Imports System.Reflection.Metadata
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar
+Imports iTextSharp.text
+Imports iTextSharp.text.pdf
+Imports MySql.Data.MySqlClient
+Imports Document = iTextSharp.text.Document
+Imports PdfFont = iTextSharp.text.Font
+Imports WinFont = System.Drawing.Font
 
 Public Class FormPenilaianPerilakuDosen
 
-    Public Sub New()
-        InitializeComponent()
+    Private Const PEJABAT_NAMA As String = " Dr. ANITA HIDAYATI, S.Kom., M.Kom"
+    Private Const PEJABAT_NIP As String = "197908032003122003"
+    Private Const PEJABAT_JABATAN As String = "Lektor / Ketuajurusan Teknik Informatika dan Komputer"
+    Private Const PEJABAT_UNIT As String = " Politeknik Negeri Jakarta"
+    Private ReadOnly buktiFiles As New Dictionary(Of Integer, String)
+
+    Private dtPertanyaan As DataTable
+
+    Private Sub FormPenilaianPerilakuDosen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Layout grid pertanyaan agar cocok untuk teks panjang
+        dgvPertanyaan.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+        colPertanyaan.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        colPertanyaan.MinimumWidth = 360
+
+        Me.Font = New WinFont("Segoe UI", 9.0F, FontStyle.Regular, GraphicsUnit.Point)
+        colBukti.UseColumnTextForButtonValue = False
+
+        SetupHeader()
+        LoadPertanyaanUntukRole()
     End Sub
 
-    Private _roleUser As String
-    Private _namaUser As String
+    ' =========================================================
+    ' HEADER: DOSEN vs ROLE LAIN
+    ' =========================================================
 
-    Dim cmd As MySqlCommand
-    Dim dr As MySqlDataReader
+    Private Sub SetupHeader()
+        Dim roleNorm = CurrentUserRole.Trim().ToLower()
 
-    Public Sub New(role As String, nama As String)
-        InitializeComponent()
-        _roleUser = role
-        _namaUser = nama
-    End Sub
-    Private Sub dgvPertanyaan_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPertanyaan.CellContentClick
-        Dim indexKolomBukti As Integer = 5
-
-        If e.ColumnIndex = indexKolomBukti AndAlso e.RowIndex >= 0 Then
-
-            ' Siapkan Dialog untuk pilih file
-            Dim openFile As New OpenFileDialog()
-            openFile.Filter = "File Dokumen|*.pdf;*.jpg;*.png;*.docx"
-            openFile.Title = "Pilih Bukti Pendukung"
-
-            If openFile.ShowDialog() = DialogResult.OK Then
-                ' Ambil nama file saja (biar gak kepanjangan)
-                Dim namaFile As String = System.IO.Path.GetFileName(openFile.FileName)
-
-                ' Tampilkan nama file di tombol tersebut (biar user tau sudah upload)
-                dgvPertanyaan.Rows(e.RowIndex).Cells(indexKolomBukti).Value = namaFile
-
-                ' Opsional: Simpan Path lengkap di 'Tag' (disembunyikan) untuk keperluan save nanti
-                dgvPertanyaan.Rows(e.RowIndex).Cells(indexKolomBukti).Tag = openFile.FileName
-
-                MessageBox.Show("File berhasil dipilih: " & namaFile, "Sukses")
-            End If
+        If roleNorm = "dosen" Then
+            LoadHeaderUntukDosenSendiri()
+        Else
+            LoadHeaderUntukPenilaiLain()
         End If
     End Sub
 
-    Private Sub dgvPertanyaan_CellValidating(sender As Object, e As DataGridViewCellValidatingEventArgs) Handles dgvPertanyaan.CellValidating
-        If e.ColumnIndex = 3 Then
+    ' --- jika login sebagai DOSEN: auto isi, tidak bisa pilih dosen lain ---
+    Private Sub LoadHeaderUntukDosenSendiri()
+        Try
+            Koneksi()
 
-            ' 1. Ambil Tipe Input dari Tag (Yang disimpan saat LoadPertanyaan)
-            Dim tipe As String = ""
-            If dgvPertanyaan.Rows(e.RowIndex).Cells(3).Tag IsNot Nothing Then
-                tipe = dgvPertanyaan.Rows(e.RowIndex).Cells(3).Tag.ToString()
+            Dim sql As String =
+                "SELECT nip, nama, prodi, periode " &
+                "FROM dosen " &
+                "WHERE user_id = @uid " &
+                "LIMIT 1"
+
+            Using cmd As New MySqlCommand(sql, Conn)
+                cmd.Parameters.AddWithValue("@uid", CurrentUserId)
+
+                Using rd = cmd.ExecuteReader()
+                    If rd.Read() Then
+                        ' Nama
+                        cboNamaDosen.Items.Clear()
+                        cboNamaDosen.Items.Add(rd("nama").ToString())
+                        cboNamaDosen.SelectedIndex = 0
+                        cboNamaDosen.Enabled = False
+
+                        ' NIP
+                        txtNip.Text = rd("nip").ToString()
+                        txtNip.ReadOnly = True
+
+                        ' Prodi
+                        cboProgramStudi.Items.Clear()
+                        cboProgramStudi.Items.Add(rd("prodi").ToString())
+                        cboProgramStudi.SelectedIndex = 0
+                        cboProgramStudi.Enabled = False
+
+                        ' Periode: dari dosen, kalau kosong pakai CurrentPeriode
+                        cboPeriode.Items.Clear()
+                        Dim periodeVal As String = ""
+
+                        If Not IsDBNull(rd("periode")) AndAlso rd("periode").ToString() <> "" Then
+                            periodeVal = rd("periode").ToString()
+                        ElseIf Not String.IsNullOrEmpty(CurrentPeriode) Then
+                            periodeVal = CurrentPeriode
+                        End If
+
+                        If periodeVal <> "" Then
+                            cboPeriode.Items.Add(periodeVal)
+                            cboPeriode.SelectedIndex = 0
+                        End If
+                        cboPeriode.Enabled = False
+                    Else
+                        MessageBox.Show("Data dosen untuk user ini tidak ditemukan di tabel dosen.",
+                                        "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    End If
+                End Using
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal memuat data dosen: " & ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' --- jika login sebagai ADMIN / KPS / PIMPINAN: bisa memilih dosen ---
+    Private Sub LoadHeaderUntukPenilaiLain()
+        Try
+            Koneksi()
+
+            ' 1. Isi list prodi
+            Dim sqlProdi As String = "SELECT DISTINCT prodi FROM dosen ORDER BY prodi"
+
+            Using cmd As New MySqlCommand(sqlProdi, Conn)
+                Using rd = cmd.ExecuteReader()
+                    cboProgramStudi.Items.Clear()
+                    While rd.Read()
+                        cboProgramStudi.Items.Add(rd("prodi").ToString())
+                    End While
+                End Using
+            End Using
+
+            If cboProgramStudi.Items.Count > 0 Then
+                cboProgramStudi.SelectedIndex = 0   ' akan memicu load nama dosen
             End If
 
-            ' Jika tipe YaTidak (Dropdown), tidak perlu divalidasi angka
-            If tipe = "YaTidak" Then Exit Sub
+            ' 2. Periode → pakai CurrentPeriode kalau ada
+            cboPeriode.Items.Clear()
+            If Not String.IsNullOrEmpty(CurrentPeriode) Then
+                cboPeriode.Items.Add(CurrentPeriode)
+                cboPeriode.SelectedIndex = 0
+            End If
 
+        Catch ex As Exception
+            MessageBox.Show("Gagal memuat header penilaian: " & ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
 
-            ' 2. Cek Inputan User
-            Dim nilaiBaru As String = e.FormattedValue.ToString()
+    ' Saat Prodi diganti → reload daftar dosen (untuk non-dosen)
+    Private Sub cboProgramStudi_SelectedIndexChanged(sender As Object, e As EventArgs) _
+        Handles cboProgramStudi.SelectedIndexChanged
 
-            ' Kalau kosong, biarkan saja (siapa tau user mau hapus dulu)
-            If nilaiBaru = "" Then Exit Sub
+        If CurrentUserRole.Trim().ToLower() = "dosen" Then Return
+        If cboProgramStudi.SelectedIndex < 0 Then Return
 
-            ' Pastikan user mengetik ANGKA
-            If Not IsNumeric(nilaiBaru) Then
-                e.Cancel = True
-                MessageBox.Show("Harap isi dengan angka!", "Error Input")
+        Try
+            Koneksi()
+
+            Dim sql As String =
+                "SELECT nama, nip FROM dosen " &
+                "WHERE prodi = @prodi " &
+                "ORDER BY nama"
+
+            Using cmd As New MySqlCommand(sql, Conn)
+                cmd.Parameters.AddWithValue("@prodi", cboProgramStudi.SelectedItem.ToString())
+
+                Using rd = cmd.ExecuteReader()
+                    cboNamaDosen.Items.Clear()
+                    While rd.Read()
+                        cboNamaDosen.Items.Add(rd("nama").ToString())
+                    End While
+                End Using
+            End Using
+
+            If cboNamaDosen.Items.Count > 0 Then
+                cboNamaDosen.SelectedIndex = 0
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal memuat daftar dosen: " & ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Saat Nama Dosen diganti → isi NIP (untuk non-dosen)
+    Private Sub cboNamaDosen_SelectedIndexChanged(sender As Object, e As EventArgs) _
+        Handles cboNamaDosen.SelectedIndexChanged
+
+        If CurrentUserRole.Trim().ToLower() = "dosen" Then Return
+        If cboNamaDosen.SelectedIndex < 0 Then Return
+
+        Try
+            Koneksi()
+
+            Dim sql As String =
+                "SELECT nip FROM dosen " &
+                "WHERE nama = @nama " &
+                "LIMIT 1"
+
+            Using cmd As New MySqlCommand(sql, Conn)
+                cmd.Parameters.AddWithValue("@nama", cboNamaDosen.SelectedItem.ToString())
+                Dim result = cmd.ExecuteScalar()
+                If result IsNot Nothing Then
+                    txtNip.Text = result.ToString()
+                End If
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal memuat NIP dosen: " & ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' =========================================================
+    ' PERTANYAAN DARI ms_pertanyaan (dengan tipe_input "proaktif")
+    ' =========================================================
+
+    Private Sub LoadPertanyaanUntukRole()
+        Try
+            Koneksi()
+
+            Dim sql As String =
+                "SELECT id, aspek, pertanyaan, tipe_input " &
+                "FROM ms_pertanyaan " &
+                "WHERE target_role = @role " &
+                "ORDER BY id"
+
+            Using cmd As New MySqlCommand(sql, Conn)
+                cmd.Parameters.AddWithValue("@role", CurrentUserRole)
+
+                Using da As New MySqlDataAdapter(cmd)
+                    dtPertanyaan = New DataTable()
+                    da.Fill(dtPertanyaan)
+                End Using
+            End Using
+
+            dgvPertanyaan.Rows.Clear()
+
+            Dim nomor As Integer = 1
+
+            For i As Integer = 0 To dtPertanyaan.Rows.Count - 1
+                Dim dr = dtPertanyaan.Rows(i)
+                Dim idx = dgvPertanyaan.Rows.Add()
+                Dim row = dgvPertanyaan.Rows(idx)
+
+                row.Cells("colNo").Value = nomor
+                row.Cells("colAspek").Value = dr("aspek").ToString()
+                row.Cells("colPertanyaan").Value = dr("pertanyaan").ToString()
+
+                ' === set pilihan skor per baris ===
+                Dim tipe As String = ""
+                If Not IsDBNull(dr("tipe_input")) Then
+                    tipe = dr("tipe_input").ToString().Trim().ToLower()
+                End If
+
+                Dim teksPertanyaan As String = dr("pertanyaan").ToString().Trim().ToLower()
+
+                Dim cellSkor = DirectCast(row.Cells("colSkor"), DataGridViewComboBoxCell)
+                cellSkor.Items.Clear()
+
+                ' Kita anggap proaktif jika:
+                ' - tipe_input = 'proaktif'
+                '   ATAU
+                ' - teks pertanyaan mengandung kata "proaktif"
+                If tipe = "proaktif" OrElse teksPertanyaan.Contains("proaktif") Then
+                    cellSkor.Items.Add("Tidak mengusulkan")
+                    cellSkor.Items.Add("Mengusulkan proposal")
+                    cellSkor.Items.Add("Menyusun proposal")
+                Else
+                    ' fallback umum: 1–10
+                    For n As Integer = 1 To 10
+                        cellSkor.Items.Add(n.ToString())
+                    Next
+                End If
+
+                row.Cells("colSkor").Value = Nothing
+                row.Cells("colCatatan").Value = ""
+
+                ' simpan ID pertanyaan di Tag
+                row.Tag = CInt(dr("id"))
+                row.Cells("colBukti").Value = "Upload File"
+
+                nomor += 1
+            Next
+
+            For Each col As DataGridViewColumn In dgvPertanyaan.Columns
+                col.SortMode = DataGridViewColumnSortMode.NotSortable
+            Next
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal memuat daftar pertanyaan: " & ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' =========================================================
+    ' UPLOAD BUKTI PENDUKUNG (hanya DOSEN)
+    ' =========================================================
+
+    Private Sub dgvPertanyaan_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) _
+        Handles dgvPertanyaan.CellContentClick
+
+        If e.RowIndex < 0 Then Return
+
+        ' Hanya kolom bukti
+        If dgvPertanyaan.Columns(e.ColumnIndex).Name <> "colBukti" Then Return
+
+        Dim isLastRow As Boolean = (e.RowIndex = dgvPertanyaan.Rows.Count - 1)
+
+        Dim ofd As New OpenFileDialog()
+        ofd.Title = "Pilih bukti pendukung"
+        ofd.Multiselect = False
+
+        If isLastRow Then
+            ' baris terakhir WAJIB PDF
+            ofd.Filter = "PDF files (*.pdf)|*.pdf"
+        Else
+            ' baris lain: gambar saja
+            ofd.Filter =
+                "Image Files (*.jpg;*.jpeg;*.png;*.gif;*.bmp)|*.jpg;*.jpeg;*.png;*.gif;*.bmp|" &
+                "All Files (*.*)|*.*"
+        End If
+
+        If ofd.ShowDialog() <> DialogResult.OK Then Return
+
+        Dim filePath As String = ofd.FileName
+        Dim ext As String = Path.GetExtension(filePath).ToLowerInvariant()
+
+        If isLastRow Then
+            ' safety check juga
+            If ext <> ".pdf" Then
+                MessageBox.Show("Bukti pada pertanyaan terakhir wajib berupa file PDF.",
+                                "Validasi Bukti", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
+        Else
+            Dim allowedImg = New String() {".jpg", ".jpeg", ".png", ".gif", ".bmp"}
+            If Not allowedImg.Contains(ext) Then
+                MessageBox.Show("Bukti pendukung harus berupa gambar (JPG/PNG/GIF/BMP).",
+                                "Validasi Bukti", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
+        End If
+
+        ' Simpan path lengkap untuk nanti disave ke DB / copy ke folder tujuan
+        buktiFiles(e.RowIndex) = filePath
+
+        ' Ubah teks tombol menjadi nama file
+        Dim fileName As String = Path.GetFileName(filePath)
+        dgvPertanyaan.Rows(e.RowIndex).Cells("colBukti").Value = fileName
+    End Sub
+
+    ' =========================================================
+    ' TOMBOL AKSI
+    ' =========================================================
+
+    Private Sub btnBatal_Click(sender As Object, e As EventArgs) Handles btnBatal.Click
+        Me.Close()
+    End Sub
+
+    ' Simpan draft + PDF ke lokal (tanpa menulis ke DB)
+    Private Sub btnSimpanDraft_Click(sender As Object, e As EventArgs) Handles btnSimpanDraft.Click
+        Using sfd As New SaveFileDialog()
+            sfd.Title = "Simpan Draft Penilaian (PDF)"
+            sfd.Filter = "PDF Files|*.pdf"
+            Dim nip = txtNip.Text.Trim()
+            Dim baseName = If(String.IsNullOrEmpty(nip), "PenilaianDosen", "Penilaian_" & nip)
+            sfd.FileName = baseName & "_" & DateTime.Now.ToString("yyyyMMdd_HHmm") & ".pdf"
+
+            If sfd.ShowDialog() = DialogResult.OK Then
+                Try
+                    ExportPenilaianToPdf(sfd.FileName)
+                    MessageBox.Show("Draft penilaian disimpan ke:" & Environment.NewLine & sfd.FileName,
+                                    "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Catch ex As Exception
+                    MessageBox.Show("Gagal menyimpan PDF: " & ex.Message,
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+        End Using
+    End Sub
+
+    ' Kirim → simpan ke tr_penilaian (dengan validasi khusus proaktif + bukti)
+    Private Sub btnKirimVerifikasi_Click(sender As Object, e As EventArgs) Handles btnKirimVerifikasi.Click
+        Dim nipDosen As String = txtNip.Text.Trim()
+
+        If String.IsNullOrEmpty(nipDosen) Then
+            MessageBox.Show("NIP dosen yang dinilai belum diisi.",
+                            "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtNip.Focus()
+            Exit Sub
+        End If
+
+        If cboPeriode.SelectedIndex < 0 Then
+            MessageBox.Show("Periode penilaian belum dipilih.",
+                            "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cboPeriode.DroppedDown = True
+            Exit Sub
+        End If
+
+        Dim periode As String = cboPeriode.SelectedItem.ToString()
+
+        ' ===== VALIDASI SKOR & BUKTI PROAKTIF =====
+        For Each row As DataGridViewRow In dgvPertanyaan.Rows
+            Dim skorObj = row.Cells("colSkor").Value
+            If skorObj Is Nothing OrElse skorObj.ToString().Trim() = "" Then
+                MessageBox.Show("Masih ada pertanyaan yang belum diberi skor." &
+                                Environment.NewLine & "Silakan lengkapi semua skor.",
+                                "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                dgvPertanyaan.CurrentCell = row.Cells("colSkor")
+                dgvPertanyaan.BeginEdit(True)
                 Exit Sub
             End If
 
-            Dim angka As Double = Convert.ToDouble(nilaiBaru)
+            Dim idx As Integer = row.Index
+            Dim tipe As String = dtPertanyaan.Rows(idx)("tipe_input").ToString().Trim().ToLower()
+            Dim skor As String = skorObj.ToString()
 
-            ' 3. VALIDASI SESUAI TIPE
-            Select Case tipe
-                Case "Persen"
-                    ' Aturan Persen: Boleh 0 sampai 100
-                    If angka < 0 Or angka > 100 Then
-                        e.Cancel = True
-                        MessageBox.Show("Untuk Persentase, masukkan angka 0 sampai 100.", "Salah Input")
-                    End If
+            If tipe = "proaktif" AndAlso skor = "Menyusun proposal" Then
+                Dim cellBukti = row.Cells("colBukti")
+                Dim buktiPath As String = ""
+                If cellBukti IsNot Nothing AndAlso cellBukti.Tag IsNot Nothing Then
+                    buktiPath = cellBukti.Tag.ToString()
+                End If
 
-                Case "Skala"
-                    ' Aturan Skala: Boleh 1 sampai 10
-                    If angka < 1 Or angka > 10 Then
-                        e.Cancel = True
-                        MessageBox.Show("Untuk Skala, masukkan angka 1 sampai 10.", "Salah Input")
-                    End If
+                If String.IsNullOrEmpty(buktiPath) Then
+                    MessageBox.Show("Untuk jawaban 'Menyusun proposal', bukti pendukung wajib diunggah.",
+                                    "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    dgvPertanyaan.CurrentCell = row.Cells("colBukti")
+                    Exit Sub
+                End If
+            End If
+        Next
 
-                Case Else
-                    ' Jaga-jaga kalau di database kosong/typo, kita anggap Skala (Default)
-                    If angka < 1 Or angka > 10 Then
-                        e.Cancel = True
-                        MessageBox.Show("Nilai harus 1 - 10", "Salah Input")
-                    End If
-            End Select
+        ' ===== SIMPAN KE tr_penilaian =====
+        Try
+            Koneksi()
 
-        End If
+            Using tran = Conn.BeginTransaction()
+                Using cmd As New MySqlCommand()
+                    cmd.Connection = Conn
+                    cmd.Transaction = tran
+
+                    cmd.CommandText =
+                        "INSERT INTO tr_penilaian " &
+                        "(id_pertanyaan, username_penilai, target_dosen_nip, periode, nilai_skor, catatan, bukti_pendukung) " &
+                        "VALUES (@idp, @penilai, @nip, @periode, @skor, @catatan, @bukti)"
+
+                    cmd.Parameters.Add("@idp", MySqlDbType.Int32)
+                    cmd.Parameters.Add("@penilai", MySqlDbType.VarChar)
+                    cmd.Parameters.Add("@nip", MySqlDbType.VarChar)
+                    cmd.Parameters.Add("@periode", MySqlDbType.VarChar)
+                    cmd.Parameters.Add("@skor", MySqlDbType.VarChar)
+                    cmd.Parameters.Add("@catatan", MySqlDbType.Text)
+                    cmd.Parameters.Add("@bukti", MySqlDbType.Text)
+
+                    For Each row As DataGridViewRow In dgvPertanyaan.Rows
+                        Dim idx As Integer = row.Index
+                        Dim idPertanyaan As Integer = CInt(row.Tag)
+                        Dim skor As String = row.Cells("colSkor").Value.ToString()
+
+                        Dim catatan As String = ""
+                        If row.Cells("colCatatan").Value IsNot Nothing Then
+                            catatan = row.Cells("colCatatan").Value.ToString()
+                        End If
+
+                        Dim buktiPath As String = ""
+                        Dim cellBukti = row.Cells("colBukti")
+                        If cellBukti IsNot Nothing AndAlso cellBukti.Tag IsNot Nothing Then
+                            buktiPath = cellBukti.Tag.ToString()
+                        End If
+
+                        cmd.Parameters("@idp").Value = idPertanyaan
+                        cmd.Parameters("@penilai").Value = CurrentUsername
+                        cmd.Parameters("@nip").Value = nipDosen
+                        cmd.Parameters("@periode").Value = periode
+                        cmd.Parameters("@skor").Value = skor
+                        cmd.Parameters("@catatan").Value = catatan
+                        cmd.Parameters("@bukti").Value = buktiPath
+
+                        cmd.ExecuteNonQuery()
+                    Next
+                End Using
+
+                tran.Commit()
+            End Using
+
+            MessageBox.Show("Penilaian berhasil disimpan.",
+                            "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.Close()
+
+        Catch ex As Exception
+            MessageBox.Show("Terjadi kesalahan saat menyimpan penilaian:" &
+                            Environment.NewLine & ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
-    Private Sub LoadPertanyaan()
-        dgvPertanyaan.Rows.Clear()
+    ' =========================================================
+    ' EXPORT PDF (Draft lokal)
+    ' =========================================================
 
-        Try
-            If Conn.State = ConnectionState.Closed Then Conn.Open()
+    Private Sub ExportPenilaianToPdf(path As String)
+        ' Dokumen A4 landscape seperti format SKP
+        Dim doc As New Document(PageSize.A4.Rotate(), 36, 36, 36, 36)
 
-            ' QUERY: Menggunakan UPPER agar tidak peduli huruf besar/kecil
-            Dim query As String = "SELECT * FROM ms_pertanyaan WHERE UPPER(target_role) = UPPER(@role)"
+        Using fs As New FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None)
+            Dim writer = PdfWriter.GetInstance(doc, fs)
+            doc.Open()
 
-            cmd = New MySqlCommand(query, Conn)
-            cmd.Parameters.AddWithValue("@role", _roleUser)
+            ' ---------- FONT ----------
+            Dim fontTitle As PdfFont = FontFactory.GetFont(FontFactory.HELVETICA, 14, PdfFont.BOLD)
+            Dim fontSub As PdfFont = FontFactory.GetFont(FontFactory.HELVETICA, 11, PdfFont.BOLD)
+            Dim fontHeader As PdfFont = FontFactory.GetFont(FontFactory.HELVETICA, 9, PdfFont.BOLD)
+            Dim fontText As PdfFont = FontFactory.GetFont(FontFactory.HELVETICA, 9, PdfFont.NORMAL)
 
-            dr = cmd.ExecuteReader()
+            ' ---------- JUDUL ATAS ----------
+            Dim pTitle As New Paragraph("PENILAIAN PERILAKU DOSEN", fontTitle)
+            pTitle.Alignment = Element.ALIGN_CENTER
+            doc.Add(pTitle)
 
+            Dim periodeStr As String = If(cboPeriode.SelectedIndex >= 0,
+                                          cboPeriode.SelectedItem.ToString(),
+                                          "-")
+
+            Dim pSub As New Paragraph("Periode: " & periodeStr, fontSub)
+            pSub.Alignment = Element.ALIGN_CENTER
+            doc.Add(pSub)
+
+            doc.Add(New Paragraph(" ", fontText))
+
+            ' ========================================================
+            '  TABEL IDENTITAS (Pegawai yang Dinilai vs Pejabat Penilai)
+            ' ========================================================
+            Dim tblIdent As New PdfPTable(4)
+            tblIdent.WidthPercentage = 100
+            tblIdent.SetWidths({0.8F, 3.2F, 0.8F, 3.2F})
+
+            Dim cell As PdfPCell
+
+            ' --- header kolom ---
+            cell = New PdfPCell(New Phrase("No", fontHeader))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("Pegawai yang Dinilai", fontHeader))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("No", fontHeader))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("Pejabat Penilai Kinerja", fontHeader))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE
+            tblIdent.AddCell(cell)
+
+            ' --- baris 1: Nama ---
+            cell = New PdfPCell(New Phrase("1.", fontText))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("Nama  : " & cboNamaDosen.Text, fontText))
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("1.", fontText))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("Nama  : " & PEJABAT_NAMA, fontText))
+            tblIdent.AddCell(cell)
+
+            ' --- baris 2: NIP ---
+            cell = New PdfPCell(New Phrase("2.", fontText))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("NIP   : " & txtNip.Text, fontText))
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("2.", fontText))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase(PEJABAT_NIP, fontText))
+            tblIdent.AddCell(cell)
+
+            ' --- baris 3: Jabatan / Prodi ---
+            cell = New PdfPCell(New Phrase("3.", fontText))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("Program Studi : " & cboProgramStudi.Text, fontText))
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("3.", fontText))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("Jabatan : " & PEJABAT_JABATAN, fontText))
+            tblIdent.AddCell(cell)
+
+            ' --- baris 4: Unit Kerja ---
+            cell = New PdfPCell(New Phrase("4.", fontText))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("Unit Kerja : ......................................", fontText))
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("4.", fontText))
+            cell.HorizontalAlignment = Element.ALIGN_CENTER
+            tblIdent.AddCell(cell)
+
+            cell = New PdfPCell(New Phrase("Unit Kerja : " & PEJABAT_UNIT, fontText))
+            tblIdent.AddCell(cell)
+
+            doc.Add(tblIdent)
+
+            doc.Add(New Paragraph(" ", fontText))
+
+            ' ========================================================
+            '  PERILAKU KERJA (TANPA HASIL KERJA)
+            ' ========================================================
+            Dim pPerilaku As New Paragraph("PERILAKU KERJA", fontSub)
+            pPerilaku.Alignment = Element.ALIGN_LEFT
+            doc.Add(pPerilaku)
+
+            doc.Add(New Paragraph(" ", fontText))
+
+            ' Tabel perilaku: No | Uraian | Skor | Catatan
+            Dim tblPerilaku As New PdfPTable(4)
+            tblPerilaku.WidthPercentage = 100
+            tblPerilaku.SetWidths({0.7F, 4.3F, 0.8F, 2.2F})
+
+            ' header
+            tblPerilaku.AddCell(New PdfPCell(New Phrase("No", fontHeader)) With {
+                .HorizontalAlignment = Element.ALIGN_CENTER,
+                .VerticalAlignment = Element.ALIGN_MIDDLE
+            })
+
+            tblPerilaku.AddCell(New PdfPCell(New Phrase("Perilaku Kerja (Aspek & Pertanyaan)", fontHeader)) With {
+                .HorizontalAlignment = Element.ALIGN_CENTER,
+                .VerticalAlignment = Element.ALIGN_MIDDLE
+            })
+
+            tblPerilaku.AddCell(New PdfPCell(New Phrase("Skor / Pilihan", fontHeader)) With {
+                .HorizontalAlignment = Element.ALIGN_CENTER,
+                .VerticalAlignment = Element.ALIGN_MIDDLE
+            })
+
+            tblPerilaku.AddCell(New PdfPCell(New Phrase("Catatan / Bukti Pendukung", fontHeader)) With {
+                .HorizontalAlignment = Element.ALIGN_CENTER,
+                .VerticalAlignment = Element.ALIGN_MIDDLE
+            })
+
+            ' isi dari grid
             Dim nomor As Integer = 1
-            While dr.Read()
-                ' Masukkan ke Grid (Pastikan ada 6 kolom di desain)
-                Dim i As Integer = dgvPertanyaan.Rows.Add(
-                    nomor,
-                    dr("aspek").ToString(),
-                    dr("pertanyaan").ToString(),
-                    "", "", ""
-                )
+            For Each row As DataGridViewRow In dgvPertanyaan.Rows
+                Dim aspek = If(row.Cells("colAspek").Value, "").ToString()
+                Dim pert = If(row.Cells("colPertanyaan").Value, "").ToString()
+                Dim skor = If(row.Cells("colSkor").Value, "").ToString()
+                Dim catatan = If(row.Cells("colCatatan").Value, "").ToString()
 
-                ' Simpan ID (Hidden)
-                dgvPertanyaan.Rows(i).Cells(0).Tag = dr("id").ToString()
+                ' No
+                tblPerilaku.AddCell(New PdfPCell(New Phrase(nomor.ToString() & ".", fontText)) With {
+                    .HorizontalAlignment = Element.ALIGN_CENTER
+                })
 
-                ' Ambil Tipe Input & Validasi Tooltip
-                Dim tipe As String = ""
-                If Not IsDBNull(dr("tipe_input")) Then tipe = dr("tipe_input").ToString()
-                dgvPertanyaan.Rows(i).Cells(3).Tag = tipe ' Simpan tipe input
-
-                If tipe = "YaTidak" Then
-                    ' Buat sel tipe ComboBox baru
-                    Dim comboCell As New DataGridViewComboBoxCell()
-
-                    ' Isi pilihannya
-                    comboCell.Items.Add("Ya")
-                    comboCell.Items.Add("Tidak")
-
-                    ' Ganti sel Textbox standar (Index 3) dengan sel ComboBox ini
-                    dgvPertanyaan.Rows(i).Cells(3) = comboCell
-
-                    ' Set nilai default (Opsional)
-                    dgvPertanyaan.Rows(i).Cells(3).Value = "Ya"
-                    dgvPertanyaan.Rows(i).Cells(3).Style.BackColor = Color.LightYellow
-
-                ElseIf tipe = "Persen" Then
-                    ' Kalau persen tetap Textbox biasa, cuma kasih warna/tooltip
-                    dgvPertanyaan.Rows(i).Cells(3).ToolTipText = "Isi angka 0-100"
-                    dgvPertanyaan.Rows(i).Cells(3).Style.BackColor = Color.AliceBlue
-                Else
-                    ' Skala biasa
-                    dgvPertanyaan.Rows(i).Cells(3).ToolTipText = "Isi angka 1-10"
+                ' Uraian = Aspek + newline + Pertanyaan
+                Dim uraian As String = aspek
+                If pert <> "" Then
+                    If uraian <> "" Then uraian &= Environment.NewLine
+                    uraian &= pert
                 End If
+                tblPerilaku.AddCell(New PdfPCell(New Phrase(uraian, fontText)))
+
+                ' Skor / Pilihan
+                tblPerilaku.AddCell(New PdfPCell(New Phrase(skor, fontText)) With {
+                    .HorizontalAlignment = Element.ALIGN_CENTER
+                })
+
+                ' Catatan / Bukti
+                tblPerilaku.AddCell(New PdfPCell(New Phrase(catatan, fontText)))
 
                 nomor += 1
-            End While
-            dr.Close()
-
-        Catch ex As Exception
-            MessageBox.Show("Gagal memuat pertanyaan: " & ex.Message)
-        End Try
-    End Sub
-
-    Private Sub IsiListDosen()
-        Try
-            ' Bersihkan daftar lama biar gak dobel
-            cboNamaDosen.Items.Clear()
-
-            If Conn.State = ConnectionState.Closed Then Conn.Open()
-
-            ' Ambil nama dosen saja, urut abjad
-            ' PASTIKAN NAMA TABEL & KOLOM SESUAI DATABASE KAMU (misal: dosen / ms_dosen)
-            Dim query As String = "SELECT nama FROM dosen ORDER BY nama ASC"
-
-            cmd = New MySqlCommand(query, Conn)
-            dr = cmd.ExecuteReader()
-
-            While dr.Read()
-                ' Masukkan nama ke dalam ComboBox
-                cboNamaDosen.Items.Add(dr("nama").ToString())
-            End While
-            dr.Close()
-
-        Catch ex As Exception
-            MessageBox.Show("Gagal memuat daftar dosen: " & ex.Message)
-        End Try
-    End Sub
-
-    ' ==========================================
-    ' 1. SAAT FORM DIBUKA -> ISI DAFTAR DOSEN
-    ' ==========================================
-    Private Sub FormPenilaian_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Cek apakah data sampai? (Nanti kalau sudah fix, baris ini boleh dihapus)
-        ' MessageBox.Show("Login sebagai: " & _namaUser & " | Role: " & _roleUser)
-
-        ' Panggil Pertanyaan
-        LoadPertanyaan()
-        IsiListDosen()
-
-        ' Setting Tampilan Awal
-        txtNip.ReadOnly = True
-        cboProgramStudi.Enabled = False
-
-        ' Isi Pilihan Periode
-        cboPeriode.Items.Clear()
-        cboPeriode.Items.Add("2024/2025 Ganjil")
-        cboPeriode.Items.Add("2024/2025 Genap")
-        cboPeriode.SelectedIndex = 0
-
-        ' Load Daftar Dosen ke ComboBox
-        IsiComboDosen()
-    End Sub
-
-    ' ====================================================
-    ' 2. SAAT NAMA DIPILIH -> OTOMATIS ISI NIP & PRODI
-    ' ====================================================
-    Private Sub cboNamaDosen_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboNamaDosen.SelectedIndexChanged
-        Try
-            If Conn.State = ConnectionState.Closed Then Conn.Open()
-
-            ' Ambil nama yang dipilih user
-            Dim namaPilihan As String = cboNamaDosen.Text
-
-            ' Cari nip dan Prodi orang tersebut
-            Dim query As String = "SELECT nip, prodi FROM dosen WHERE nama = @nama"
-
-            cmd = New MySqlCommand(query, Conn)
-            cmd.Parameters.AddWithValue("@nama", namaPilihan)
-
-            dr = cmd.ExecuteReader()
-
-            If dr.Read() Then
-                ' Isi Textbox NIP (Cek null biar gak error)
-                If Not IsDBNull(dr("nip")) Then
-                    txtNip.Text = dr("nip").ToString()
-                Else
-                    txtNip.Text = "-"
-                End If
-
-                ' Isi Textbox/Combo Prodi
-                If Not IsDBNull(dr("prodi")) Then
-                    cboProgramStudi.Text = dr("prodi").ToString()
-                Else
-                    cboProgramStudi.Text = "-"
-                End If
-            End If
-            dr.Close()
-
-        Catch ex As Exception
-            MessageBox.Show("Error ambil data: " & ex.Message)
-        End Try
-    End Sub
-
-    Private Sub IsiComboDosen()
-        Try
-            If Conn.State = ConnectionState.Closed Then Conn.Open()
-            cboNamaDosen.Items.Clear()
-
-            cmd = New MySqlCommand("SELECT nama FROM dosen ORDER BY nama ASC", Conn)
-            dr = cmd.ExecuteReader()
-            While dr.Read()
-                cboNamaDosen.Items.Add(dr("nama").ToString())
-            End While
-            dr.Close()
-        Catch ex As Exception
-            ' Abaikan error saat load dosen
-        End Try
-    End Sub
-
-    Private Sub btnBatal_Click(sender As Object, e As EventArgs) Handles btnBatal.Click
-        Dim tanya = MessageBox.Show("Yakin ingin membatalkan penilaian? Data yang belum disimpan akan hilang.", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-
-        If tanya = DialogResult.Yes Then
-            Me.Close() ' Menutup form penilaian
-        End If
-    End Sub
-
-    Private Sub HitungDanSimpan()
-
-        ' --- VARIABEL PERHITUNGAN ---
-        Dim m_old As Double = 0.0      ' Belief DST
-        Dim theta_old As Double = 1.0  ' Uncertainty DST
-
-        Dim totalPersen As Double = 0
-        Dim jumlahSoalPersen As Integer = 0
-
-        Dim jumlahYa As Integer = 0
-        Dim jumlahSoalYaTidak As Integer = 0
-
-
-        ' 1. LOOPING DATA GRID (MEMISAHKAN JENIS SOAL)
-        For Each row As DataGridViewRow In dgvPertanyaan.Rows
-            If row.IsNewRow Then Continue For
-
-            ' Ambil Inputan
-            Dim inputUser As String = ""
-            If row.Cells(3).Value IsNot Nothing Then inputUser = row.Cells(3).Value.ToString()
-            If inputUser = "" Then Continue For
-
-            ' Ambil Tipe
-            Dim tipe As String = "skala"
-            If row.Cells(3).Tag IsNot Nothing Then tipe = row.Cells(3).Tag.ToString().ToLower().Trim()
-
-            ' PROSES HITUNG SESUAI TIPE
-            Select Case tipe
-
-            ' === KOMPONEN 1: METODE DST (Bobot 50%) ===
-                Case "skala"
-                    Dim angka As Double = Convert.ToDouble(inputUser)
-                    Dim m_new As Double = angka / 10.0 ' Konversi ke densitas 0.1 - 1.0
-                    Dim theta_new As Double = 1.0 - m_new
-
-                    ' Rumus Kombinasi Dempster
-                    Dim m_kombinasi As Double = (m_old * m_new) + (m_old * theta_new) + (theta_old * m_new)
-                    Dim theta_kombinasi As Double = theta_old * theta_new
-
-                    m_old = m_kombinasi
-                    theta_old = theta_kombinasi
-
-            ' === KOMPONEN 2: RATA-RATA PERSEN (Bobot 30%) ===
-                Case "persen"
-                    Dim angka As Double = Convert.ToDouble(inputUser)
-                    totalPersen += angka
-                    jumlahSoalPersen += 1
-
-            ' === KOMPONEN 3: KEPATUHAN YA/TIDAK (Bobot 20%) ===
-                Case "yatidak"
-                    jumlahSoalYaTidak += 1
-                    If inputUser.ToLower() = "ya" Then jumlahYa += 1
-
-            End Select
-        Next
-
-
-        ' 2. DAPATKAN NILAI MENTAH (Skala 0-100)
-
-        ' A. Nilai DST (0-100)
-        Dim skorDST As Double = m_old * 100
-
-        ' B. Nilai Rata-rata Persen (0-100)
-        Dim skorPersen As Double = 0
-        If jumlahSoalPersen > 0 Then skorPersen = totalPersen / jumlahSoalPersen
-
-        ' C. Nilai Ya/Tidak (0-100)
-        Dim skorYaTidak As Double = 0
-        If jumlahSoalYaTidak > 0 Then skorYaTidak = (jumlahYa / jumlahSoalYaTidak) * 100
-
-
-        ' 3. HITUNG NILAI AKHIR (PENGGABUNGAN DENGAN BOBOT)
-        ' Bobot: DST=50%, Persen=30%, YaTidak=20%
-
-        Dim NilaiAkhirTotal As Double = (skorDST * 0.5) + (skorPersen * 0.3) + (skorYaTidak * 0.2)
-
-
-        ' 4. TENTUKAN PREDIKAT / LABEL OUTPUT
-        Dim Predikat As String = ""
-        Dim WarnaPredikat As String = "" ' Cuma buat info
-
-        If NilaiAkhirTotal >= 90 Then
-            Predikat = "DI ATAS EKSPEKTASI"
-        ElseIf NilaiAkhirTotal >= 76 Then
-            Predikat = "SESUAI EKSPEKTASI"
-        Else
-            Predikat = "DI BAWAH EKSPEKTASI"
-        End If
-
-
-        ' 5. TAMPILKAN HASIL (POPUP LAPORAN)
-        Dim pesan As String = "DETAIL PERHITUNGAN:" & vbCrLf &
-                              "----------------------------------" & vbCrLf &
-                              "1. Perilaku (Metode DST) : " & skorDST.ToString("F2") & " (Bobot 50%)" & vbCrLf &
-                              "2. Capaian (Rata-rata)   : " & skorPersen.ToString("F2") & " (Bobot 30%)" & vbCrLf &
-                              "3. Kepatuhan (Ya/Tidak)  : " & skorYaTidak.ToString("F2") & " (Bobot 20%)" & vbCrLf &
-                              "----------------------------------" & vbCrLf &
-                              "NILAI AKHIR: " & NilaiAkhirTotal.ToString("F2") & vbCrLf &
-                              "PREDIKAT   : " & Predikat
-
-        MessageBox.Show(pesan, "Hasil Penilaian Kinerja")
-
-
-        ' 6. SIMPAN KE DATABASE
-        Try
-            If Conn.State = ConnectionState.Closed Then Conn.Open()
-
-            ' A. Simpan Detail Jawaban (Looping row)
-            For Each row As DataGridViewRow In dgvPertanyaan.Rows
-                If row.IsNewRow Then Continue For
-                ' ... (Kode INSERT INTO tr_penilaian kamu yang lama) ...
             Next
 
-            ' B. Simpan Rekap Nilai Akhir (PENTING!)
-            ' Pastikan kamu punya tabel 'rekap_nilai'
-            ' Query contoh:
-            ' INSERT INTO rekap_nilai (nama_dosen, periode, nilai_dst, nilai_persen, nilai_yt, nilai_akhir, predikat) 
-            ' VALUES (@nama, @per, @dst, @prsn, @yt, @akhir, @pred)
+            doc.Add(tblPerilaku)
 
-            MessageBox.Show("Data dan Predikat berhasil disimpan!", "Sukses")
-            Me.Close()
+            doc.Add(New Paragraph(" ", fontText))
+            doc.Add(New Paragraph(" ", fontText))
 
-        Catch ex As Exception
-            MessageBox.Show("Gagal Simpan: " & ex.Message)
-        End Try
+            ' ========================================================
+            '  BLOK TANDA TANGAN
+            ' ========================================================
+            Dim tglStr As String = Date.Now.ToString("dd MMMM yyyy")
 
+            Dim tblTTD As New PdfPTable(2)
+            tblTTD.WidthPercentage = 100
+            tblTTD.SetWidths({1.0F, 1.0F})
+
+            ' Pegawai yang Dinilai
+            tblTTD.AddCell(New PdfPCell(New Phrase(
+                "Pegawai yang Dinilai," & Environment.NewLine &
+                Environment.NewLine & Environment.NewLine &
+                cboNamaDosen.Text & Environment.NewLine &
+                "NIP " & txtNip.Text,
+                fontText)) With {
+                .Border = Rectangle.NO_BORDER,
+                .HorizontalAlignment = Element.ALIGN_LEFT
+            })
+
+            ' Pejabat Penilai Kinerja (fix)
+            tblTTD.AddCell(New PdfPCell(New Phrase(
+                "Pejabat Penilai Kinerja," & Environment.NewLine &
+                "( " & tglStr & " )" & Environment.NewLine &
+                Environment.NewLine &
+                PEJABAT_NAMA & Environment.NewLine &
+                PEJABAT_NIP,
+                fontText)) With {
+                .Border = Rectangle.NO_BORDER,
+                .HorizontalAlignment = Element.ALIGN_RIGHT
+            })
+
+            doc.Add(tblTTD)
+
+            doc.Close()
+        End Using
     End Sub
 
-    Private Sub btnKirimVerifikasi_Click(sender As Object, e As EventArgs) Handles btnKirimVerifikasi.Click
-        ' 1. CEK DULU: APAKAH DOSEN SUDAH DIPILIH? (Anti Error Null)
-        If cboNamaDosen.Text = "" Or txtNip.Text = "" Or txtNip.Text = "-" Then
-            MessageBox.Show("Harap pilih Nama Dosen terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
 
-        ' 2. CEK APAKAH SEMUA PERTANYAAN SUDAH DIISI?
-        For Each row As DataGridViewRow In dgvPertanyaan.Rows
-            If row.IsNewRow Then Continue For
-
-            Dim isi As String = ""
-            If row.Cells(3).Value IsNot Nothing Then isi = row.Cells(3).Value.ToString()
-
-            If isi = "" Then
-                MessageBox.Show("Maaf, pertanyaan nomor " & row.Cells(0).Value & " belum diisi!", "Belum Lengkap", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                Return
-            End If
-        Next
-
-        ' 3. KONFIRMASI KIRIM
-        Dim tanya = MessageBox.Show("Apakah Anda yakin data sudah benar? Data yang sudah dikirim tidak dapat diubah lagi.", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-        If tanya = DialogResult.No Then Return
-
-        Try
-            If Conn.State = ConnectionState.Closed Then Conn.Open()
-
-            ' A. HAPUS DATA LAMA (Biar bersih)
-            Dim sqlHapus As String = "DELETE FROM tr_penilaian WHERE username_penilai=@penilai AND target_dosen_nip=@nip AND periode=@per"
-            cmd = New MySqlCommand(sqlHapus, Conn)
-            cmd.Parameters.AddWithValue("@penilai", _namaUser)
-            cmd.Parameters.AddWithValue("@nip", txtNip.Text)
-            cmd.Parameters.AddWithValue("@per", cboPeriode.Text)
-            cmd.ExecuteNonQuery()
-
-            ' B. SIMPAN JAWABAN BARU
-            For Each row As DataGridViewRow In dgvPertanyaan.Rows
-                If row.IsNewRow Then Continue For
-
-                Dim idTanya As String = row.Cells(0).Tag.ToString()
-                Dim jawaban As String = row.Cells(3).Value.ToString()
-
-                Dim query As String = "INSERT INTO tr_penilaian (id_pertanyaan, username_penilai, periode, nilai_skor, target_dosen_nip) VALUES (@id, @penilai, @per, @nilai, @nip)"
-                cmd = New MySqlCommand(query, Conn)
-                cmd.Parameters.AddWithValue("@id", idTanya)
-                cmd.Parameters.AddWithValue("@penilai", _namaUser)
-                cmd.Parameters.AddWithValue("@per", cboPeriode.Text)
-                cmd.Parameters.AddWithValue("@nilai", jawaban)
-                cmd.Parameters.AddWithValue("@nip", txtNip.Text)
-                cmd.ExecuteNonQuery()
-            Next
-
-            ' C. UPDATE STATUS (Tandai selesai)
-            UpdateStatusSelesai()
-
-            MessageBox.Show("Data berhasil dikirim untuk verifikasi!", "Sukses")
-            Me.Close()
-
-        Catch ex As Exception
-            MessageBox.Show("Gagal Kirim: " & ex.Message)
-        End Try
-    End Sub
-
-    ' --- SUB UPDATE STATUS (Sama seperti sebelumnya) ---
-    Private Sub UpdateStatusSelesai()
-        ' Cek dulu apakah data di tabel status ada?
-        Dim sqlCek As String = "SELECT count(*) FROM tr_status_penilaian WHERE nip=@nip AND periode=@per"
-        cmd = New MySqlCommand(sqlCek, Conn)
-        cmd.Parameters.AddWithValue("@nip", txtNip.Text)
-        cmd.Parameters.AddWithValue("@per", cboPeriode.Text)
-
-        Dim adaData As Integer = Convert.ToInt32(cmd.ExecuteScalar())
-
-        ' Kalau belum ada di tabel status, insert baris baru
-        If adaData = 0 Then
-            Dim sqlInsert As String = "INSERT INTO tr_status_penilaian (nip, periode) VALUES (@nip, @per)"
-            cmd = New MySqlCommand(sqlInsert, Conn)
-            cmd.Parameters.AddWithValue("@nip", txtNip.Text)
-            cmd.Parameters.AddWithValue("@per", cboPeriode.Text)
-            cmd.ExecuteNonQuery()
-        End If
-
-        ' Update kolom status sesuai Role yang Login
-        Dim sqlUpdate As String = ""
-        Select Case _roleUser
-            Case "Dosen"
-                sqlUpdate = "UPDATE tr_status_penilaian SET status_dosen=1 WHERE nip=@nip AND periode=@per"
-            Case "Admin"
-                sqlUpdate = "UPDATE tr_status_penilaian SET status_admin=1 WHERE nip=@nip AND periode=@per"
-            Case "KPS"
-                sqlUpdate = "UPDATE tr_status_penilaian SET status_kps=1 WHERE nip=@nip AND periode=@per"
-        End Select
-
-        If sqlUpdate <> "" Then
-            cmd = New MySqlCommand(sqlUpdate, Conn)
-            cmd.Parameters.AddWithValue("@nip", txtNip.Text)
-            cmd.Parameters.AddWithValue("@per", cboPeriode.Text)
-            cmd.ExecuteNonQuery()
-        End If
-    End Sub
-
-    Private Sub btnSimpanDraft_Click(sender As Object, e As EventArgs) Handles btnSimpanDraft.Click
-        If cboNamaDosen.Text = "" Or txtNip.Text = "" Or txtNip.Text = "-" Then
-            MessageBox.Show("Harap pilih Nama Dosen terlebih dahulu!", "Peringatan")
-            Return
-        End If
-
-        Try
-            If Conn.State = ConnectionState.Closed Then Conn.Open()
-
-            ' A. HAPUS DULU JAWABAN LAMA (Biar tidak duplikat saat simpan ulang)
-            ' Hapus jawaban milik penilai ini, untuk dosen ini, di periode ini
-            Dim sqlHapus As String = "DELETE FROM tr_penilaian WHERE username_penilai=@penilai AND target_dosen_nip=@nip AND periode=@per"
-            cmd = New MySqlCommand(sqlHapus, Conn)
-            cmd.Parameters.AddWithValue("@penilai", _namaUser)
-            cmd.Parameters.AddWithValue("@nip", txtNip.Text)
-            cmd.Parameters.AddWithValue("@per", cboPeriode.Text)
-            cmd.ExecuteNonQuery()
-
-            ' B. SIMPAN JAWABAN BARU (LOOPING)
-            For Each row As DataGridViewRow In dgvPertanyaan.Rows
-                If row.IsNewRow Then Continue For
-
-                ' Ambil data
-                Dim idTanya As String = row.Cells(0).Tag.ToString()
-                Dim jawaban As String = ""
-                If row.Cells(3).Value IsNot Nothing Then jawaban = row.Cells(3).Value.ToString()
-
-                ' Insert Jawaban (Walaupun kosong tetap disimpan sebagai draft)
-                Dim query As String = "INSERT INTO tr_penilaian (id_pertanyaan, username_penilai, periode, nilai_skor, target_dosen_nip) VALUES (@id, @penilai, @per, @nilai, @nip)"
-
-                cmd = New MySqlCommand(query, Conn)
-                cmd.Parameters.AddWithValue("@id", idTanya)
-                cmd.Parameters.AddWithValue("@penilai", _namaUser)
-                cmd.Parameters.AddWithValue("@per", cboPeriode.Text)
-                cmd.Parameters.AddWithValue("@nilai", jawaban)
-                cmd.Parameters.AddWithValue("@nip", txtNip.Text)
-                cmd.ExecuteNonQuery()
-            Next
-
-            MessageBox.Show("Draft berhasil disimpan. Anda bisa melanjutkannya nanti.", "Draft Tersimpan")
-
-            ' Form JANGAN ditutup, siapa tau mau lanjut ngisi
-        Catch ex As Exception
-            MessageBox.Show("Gagal Simpan Draft: " & ex.Message)
-        End Try
-    End Sub
-
-    Private Sub cboPeriode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboPeriode.SelectedIndexChanged
-
-    End Sub
 End Class

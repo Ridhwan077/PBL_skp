@@ -10,7 +10,7 @@
     <Compile Update="FormLogin.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormMasterDataPengaturan.vb">
+    <Compile Update="FormMasterData.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormPenilaianPerilakuDosen.vb">

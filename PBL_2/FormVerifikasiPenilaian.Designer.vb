@@ -65,13 +65,13 @@ Partial Class FormVerifikasiPenilaian
         pnlHeader.Dock = DockStyle.Top
         pnlHeader.Location = New Point(0, 0)
         pnlHeader.Name = "pnlHeader"
-<<<<<<< Updated upstream
+
         pnlHeader.Padding = New Padding(16)
         pnlHeader.Size = New Size(1233, 145)
-=======
+
         pnlHeader.Padding = New Padding(16, 16, 16, 16)
         pnlHeader.Size = New Size(738, 145)
->>>>>>> Stashed changes
+
         pnlHeader.TabIndex = 0
         ' 
         ' cboPeriode
@@ -163,11 +163,11 @@ Partial Class FormVerifikasiPenilaian
         lblTitle.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
         lblTitle.Location = New Point(16, 16)
         lblTitle.Name = "lblTitle"
-<<<<<<< Updated upstream
+
         lblTitle.Size = New Size(1201, 30)
-=======
+
         lblTitle.Size = New Size(706, 30)
->>>>>>> Stashed changes
+
         lblTitle.TabIndex = 0
         lblTitle.Text = "Verifikasi Penilaian Perilaku Dosen"
         lblTitle.TextAlign = ContentAlignment.MiddleLeft
@@ -211,11 +211,11 @@ Partial Class FormVerifikasiPenilaian
         dgvVerifikasi.RowHeadersWidth = 51
         dgvVerifikasi.RowTemplate.Height = 26
         dgvVerifikasi.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-<<<<<<< Updated upstream
+
         dgvVerifikasi.Size = New Size(1233, 302)
-=======
+
         dgvVerifikasi.Size = New Size(738, 156)
->>>>>>> Stashed changes
+
         dgvVerifikasi.TabIndex = 1
         ' 
         ' colNo
@@ -297,17 +297,17 @@ Partial Class FormVerifikasiPenilaian
         pnlFooter.Controls.Add(btnSimpan)
         pnlFooter.Controls.Add(btnSetFinal)
         pnlFooter.Dock = DockStyle.Bottom
-<<<<<<< Updated upstream
+
         pnlFooter.Location = New Point(0, 447)
         pnlFooter.Name = "pnlFooter"
         pnlFooter.Padding = New Padding(16, 8, 16, 8)
         pnlFooter.Size = New Size(1233, 50)
-=======
+
         pnlFooter.Location = New Point(0, 301)
         pnlFooter.Name = "pnlFooter"
         pnlFooter.Padding = New Padding(16, 8, 16, 8)
         pnlFooter.Size = New Size(738, 50)
->>>>>>> Stashed changes
+
         pnlFooter.TabIndex = 2
         ' 
         ' btnTutup
@@ -333,11 +333,11 @@ Partial Class FormVerifikasiPenilaian
         btnSimpan.FlatStyle = FlatStyle.Flat
         btnSimpan.Font = New Font("Segoe UI", 9F)
         btnSimpan.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-<<<<<<< Updated upstream
+
         btnSimpan.Location = New Point(843, 11)
-=======
+
         btnSimpan.Location = New Point(348, 11)
->>>>>>> Stashed changes
+
         btnSimpan.Name = "btnSimpan"
         btnSimpan.Size = New Size(110, 28)
         btnSimpan.TabIndex = 1
@@ -352,11 +352,11 @@ Partial Class FormVerifikasiPenilaian
         btnSetFinal.FlatStyle = FlatStyle.Flat
         btnSetFinal.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnSetFinal.ForeColor = Color.White
-<<<<<<< Updated upstream
+
         btnSetFinal.Location = New Point(963, 11)
-=======
+
         btnSetFinal.Location = New Point(468, 11)
->>>>>>> Stashed changes
+
         btnSetFinal.Name = "btnSetFinal"
         btnSetFinal.Size = New Size(254, 28)
         btnSetFinal.TabIndex = 2
@@ -370,11 +370,11 @@ Partial Class FormVerifikasiPenilaian
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(245), CByte(240), CByte(232))
         CancelButton = btnTutup
-<<<<<<< Updated upstream
+
         ClientSize = New Size(1233, 497)
-=======
+
         ClientSize = New Size(738, 351)
->>>>>>> Stashed changes
+
         Controls.Add(dgvVerifikasi)
         Controls.Add(pnlFooter)
         Controls.Add(pnlHeader)

@@ -40,21 +40,28 @@
 
         Select Case roleNorm
             Case "dosen"
-                ' Dosen: Isi Penilaian + Lihat Nilai
+                ' Dosen: isi penilaian + lihat nilai
                 btnIsiPenilaian.Enabled = True
                 btnLihatNilai.Enabled = True
 
             Case "admin"
-                ' Admin: Master Data & Pengaturan
+                ' Admin: boleh isi penilaian (misal bantu input) + master data
+                btnIsiPenilaian.Enabled = True
                 btnMasterData.Enabled = True
 
-            Case "kps", "pimpinan", "kajur"
-                ' Pimpinan/KPS/Kajur: Verifikasi + Rekap
+            Case "kps"
+                ' KPS: boleh isi penilaian + verifikasi + rekap
+                btnIsiPenilaian.Enabled = True
+                btnVerifikasi.Enabled = True
+                btnRekap.Enabled = True
+
+            Case "pimpinan", "Kepala Jurusan"
+                ' Pimpinan / Kajur: verifikasi + rekap
                 btnVerifikasi.Enabled = True
                 btnRekap.Enabled = True
 
             Case Else
-                ' Role lain: belum diberi akses menu apa pun
+                ' Role lain: tidak ada akses menu
         End Select
     End Sub
 
@@ -73,7 +80,11 @@
     Private Sub btnIsiPenilaian_Click(sender As Object, e As EventArgs) Handles btnIsiPenilaian.Click
         Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
-        If roleNorm <> "dosen" Then
+        ' izinkan: dosen, admin, kps
+        If Not (roleNorm = "dosen" OrElse
+            roleNorm = "admin" OrElse
+            roleNorm = "kps") Then
+
             ShowAccessDenied()
             Exit Sub
         End If
@@ -117,7 +128,7 @@
             Exit Sub
         End If
 
-        Dim f As New FormMasterDataPengaturan()
+        Dim f As New FormMasterData()
         f.ShowDialog()
     End Sub
 
