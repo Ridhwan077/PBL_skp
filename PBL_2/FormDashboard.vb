@@ -1,89 +1,150 @@
-﻿Public Class FormDashboard
+﻿Partial Public Class FormDashboard
 
-    Private _namaUser As String
-    Private _roleUser As String
-    Private _periodeAktif As String
+    ' ====================================
+    '  CONSTRUCTOR
+    ' ====================================
 
-
-    Public Sub New(nama As String, role As String, periode As String)
-        ' Method ini wajib ada untuk inisialisasi desain
+    Public Sub New()
         InitializeComponent()
-
-        ' Simpan data ke variabel
-        _namaUser = nama
-        _roleUser = role
-        _periodeAktif = periode
-
-        ' Jalankan pengaturan tampilan
-        AturTampilan()
     End Sub
 
-    Private Sub AturTampilan()
-        ' 1. UBAH TEKS HEADER
-        lblWelcome.Text = "Selamat datang, " & _namaUser
-        lblUserInfo.Text = "Role: " & _roleUser & " | Periode aktif: " & _periodeAktif
+    ' ====================================
+    '  FORM LOAD
+    ' ====================================
 
-        ' 2. MATIKAN SEMUA TOMBOL DULU (Default)
+    Private Sub FormDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        MessageBox.Show($"DEBUG: {CurrentUsername} / {CurrentUserRole}")
+        ' Selalu isi dari Session, jangan cek kosong
+        lblWelcome.Text = $"Selamat datang, {CurrentUsername}"
+        lblUserInfo.Text = $"Role: {CurrentUserRole} | Periode aktif: {CurrentPeriode}"
+
+        SetupRoleAccess()
+    End Sub
+
+    ' ====================================
+    '  ROLE-BASED ACCESS
+    ' ====================================
+
+    Private Sub SetupRoleAccess()
+        ' Matikan semua tombol menu dulu
         btnIsiPenilaian.Enabled = False
         btnVerifikasi.Enabled = False
         btnRekap.Enabled = False
         btnMasterData.Enabled = False
         btnLihatNilai.Enabled = False
 
-        ' 3. NYALAKAN SESUAI ROLE
-        Select Case _roleUser
-            Case "Admin"
-                ' Admin: Bisa segalanya (Master Data, Rekap, dan SEKARANG bisa Isi Penilaian)
-                btnMasterData.Enabled = True
-                btnRekap.Enabled = True
-                btnIsiPenilaian.Enabled = True ' <--- Admin juga bisa ngisi
+        Dim roleNorm As String = ""
+        If CurrentUserRole IsNot Nothing Then
+            roleNorm = CurrentUserRole.Trim().ToLower()
+        End If
 
-            Case "Dosen", "Tendik"
-                ' Dosen: Hanya bisa isi penilaian
+        Select Case roleNorm
+            Case "dosen"
+                ' Dosen: Isi Penilaian + Lihat Nilai
                 btnIsiPenilaian.Enabled = True
                 btnLihatNilai.Enabled = True
 
-            Case "KPS", "Kaprodi"
-                ' KPS: Bisa Verifikasi, Lihat nilai, dan bisa Isi Penilaian
-                btnLihatNilai.Enabled = True
-                btnVerifikasi.Enabled = True
-                btnIsiPenilaian.Enabled = True ' <--- KPS juga bisa ngisi
+            Case "admin"
+                ' Admin: Master Data & Pengaturan
+                btnMasterData.Enabled = True
 
-            Case "Kajur"
-                ' Kajur: Hanya validasi nilai di rekap & monitoring
+            Case "kps", "pimpinan", "kajur"
+                ' Pimpinan/KPS/Kajur: Verifikasi + Rekap
+                btnVerifikasi.Enabled = True
                 btnRekap.Enabled = True
-                btnLihatNilai.Enabled = True
 
             Case Else
-                MessageBox.Show("Role tidak dikenali.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ' Role lain: belum diberi akses menu apa pun
         End Select
     End Sub
 
-    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        Dim tanya = MessageBox.Show("Yakin ingin logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-        If tanya = DialogResult.Yes Then
-            Dim formLogin As New FormLogin()
-            formLogin.Show()
-            Me.Dispose()
-        End If
+    Private Sub ShowAccessDenied()
+        MessageBox.Show("Anda tidak memiliki akses ke menu ini.",
+                        "Akses Ditolak",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning)
     End Sub
 
+    ' ====================================
+    '  EVENT HANDLER TOMBOL MENU
+    ' ====================================
+
+    ' --- Isi Penilaian Perilaku Dosen (ROLE: DOSEN) ---
     Private Sub btnIsiPenilaian_Click(sender As Object, e As EventArgs) Handles btnIsiPenilaian.Click
-        Dim formNilai As New FormPenilaianPerilakuDosen(_roleUser, _namaUser)
-        formNilai.ShowDialog()
+        Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
+
+        If roleNorm <> "dosen" Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
+        Dim f As New FormPenilaianPerilakuDosen()
+        f.ShowDialog()
     End Sub
 
+    ' --- Verifikasi Penilaian (ROLE: PIMPINAN / KPS / KAJUR) ---
     Private Sub btnVerifikasi_Click(sender As Object, e As EventArgs) Handles btnVerifikasi.Click
-        FormVerifikasiPenilaian.Show()
+        Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
+
+        If roleNorm <> "kps" AndAlso roleNorm <> "pimpinan" AndAlso roleNorm <> "kajur" Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
+        Dim f As New FormVerifikasiPenilaian()
+        f.ShowDialog()
+    End Sub
+
+    ' --- Rekap & Monitoring (ROLE: PIMPINAN / KPS / KAJUR) ---
+    Private Sub btnRekap_Click(sender As Object, e As EventArgs) Handles btnRekap.Click
+        Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
+
+        If roleNorm <> "kps" AndAlso roleNorm <> "pimpinan" AndAlso roleNorm <> "kajur" Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
+        Dim f As New FormRekapMonitoring()
+        f.ShowDialog()
+    End Sub
+
+    ' --- Master Data & Pengaturan (ROLE: ADMIN) ---
+    Private Sub btnMasterData_Click(sender As Object, e As EventArgs) Handles btnMasterData.Click
+        Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
+
+        If roleNorm <> "admin" Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
+        Dim f As New FormMasterDataPengaturan()
+        f.ShowDialog()
+    End Sub
+
+    ' --- Lihat Nilai (ROLE: DOSEN) ---
+    Private Sub btnLihatNilai_Click(sender As Object, e As EventArgs) Handles btnLihatNilai.Click
+        Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
+
+        If roleNorm <> "dosen" Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
+        Dim f As New FormLihatNilai()
+        f.ShowDialog()
+    End Sub
+
+    ' --- LOGOUT ---
+    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+        ' Reset Session
+        CurrentUserId = 0
+        CurrentUsername = ""
+        CurrentUserRole = ""
+
+        ' Kembali ke FormLogin
+        Dim login As New FormLogin()
+        login.Show()
         Me.Close()
     End Sub
 
-    Private Sub pnlButtons_Paint(sender As Object, e As PaintEventArgs) Handles pnlButtons.Paint
-
-    End Sub
-
-    Private Sub btnRekap_Click(sender As Object, e As EventArgs) Handles btnRekap.Click
-        Dim frm As New FormRekap()
-        frm.ShowDialog()
-    End Sub
 End Class

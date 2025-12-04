@@ -40,10 +40,10 @@ Partial Class FormDashboard
         pnlTop.Controls.Add(lblWelcome)
         pnlTop.Dock = DockStyle.Top
         pnlTop.Location = New Point(0, 0)
-        pnlTop.Margin = New Padding(5)
+        pnlTop.Margin = New Padding(3, 2, 3, 2)
         pnlTop.Name = "pnlTop"
-        pnlTop.Padding = New Padding(39, 26, 39, 26)
-        pnlTop.Size = New Size(1462, 144)
+        pnlTop.Padding = New Padding(21, 12, 21, 12)
+        pnlTop.Size = New Size(795, 68)
         pnlTop.TabIndex = 0
         ' 
         ' lblSubtitle
@@ -51,10 +51,9 @@ Partial Class FormDashboard
         lblSubtitle.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         lblSubtitle.Font = New Font("Segoe UI", 9.0F, FontStyle.Italic)
         lblSubtitle.ForeColor = Color.FromArgb(CByte(230), CByte(237), CByte(247))
-        lblSubtitle.Location = New Point(748, 77)
-        lblSubtitle.Margin = New Padding(5, 0, 5, 0)
+        lblSubtitle.Location = New Point(411, 36)
         lblSubtitle.Name = "lblSubtitle"
-        lblSubtitle.Size = New Size(676, 38)
+        lblSubtitle.Size = New Size(364, 18)
         lblSubtitle.TabIndex = 3
         lblSubtitle.Text = "Kelola penilaian perilaku dosen dengan mudah dan terpusat"
         lblSubtitle.TextAlign = ContentAlignment.MiddleRight
@@ -64,10 +63,9 @@ Partial Class FormDashboard
         lblUserInfo.AutoSize = True
         lblUserInfo.Font = New Font("Segoe UI", 9.0F)
         lblUserInfo.ForeColor = Color.Gainsboro
-        lblUserInfo.Location = New Point(42, 83)
-        lblUserInfo.Margin = New Padding(5, 0, 5, 0)
+        lblUserInfo.Location = New Point(23, 39)
         lblUserInfo.Name = "lblUserInfo"
-        lblUserInfo.Size = New Size(405, 32)
+        lblUserInfo.Size = New Size(202, 15)
         lblUserInfo.TabIndex = 2
         lblUserInfo.Text = "Role: [Role]  |  Periode aktif: [Periode]"
         ' 
@@ -76,10 +74,9 @@ Partial Class FormDashboard
         lblWelcome.AutoSize = True
         lblWelcome.Font = New Font("Segoe UI Semibold", 14.0F, FontStyle.Bold)
         lblWelcome.ForeColor = Color.White
-        lblWelcome.Location = New Point(39, 29)
-        lblWelcome.Margin = New Padding(5, 0, 5, 0)
+        lblWelcome.Location = New Point(21, 14)
         lblWelcome.Name = "lblWelcome"
-        lblWelcome.Size = New Size(441, 51)
+        lblWelcome.Size = New Size(220, 25)
         lblWelcome.TabIndex = 1
         lblWelcome.Text = "Selamat datang, [Nama]"
         ' 
@@ -93,11 +90,11 @@ Partial Class FormDashboard
         pnlButtons.Controls.Add(btnVerifikasi)
         pnlButtons.Controls.Add(btnIsiPenilaian)
         pnlButtons.Dock = DockStyle.Fill
-        pnlButtons.Location = New Point(0, 144)
-        pnlButtons.Margin = New Padding(5)
+        pnlButtons.Location = New Point(0, 68)
+        pnlButtons.Margin = New Padding(3, 2, 3, 2)
         pnlButtons.Name = "pnlButtons"
-        pnlButtons.Padding = New Padding(65, 64, 65, 48)
-        pnlButtons.Size = New Size(1462, 656)
+        pnlButtons.Padding = New Padding(35, 30, 35, 22)
+        pnlButtons.Size = New Size(795, 307)
         pnlButtons.TabIndex = 1
         ' 
         ' btnLihatNilai
@@ -108,10 +105,10 @@ Partial Class FormDashboard
         btnLihatNilai.FlatStyle = FlatStyle.Flat
         btnLihatNilai.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         btnLihatNilai.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
-        btnLihatNilai.Location = New Point(536, 272)
-        btnLihatNilai.Margin = New Padding(5)
+        btnLihatNilai.Location = New Point(289, 128)
+        btnLihatNilai.Margin = New Padding(3, 2, 3, 2)
         btnLihatNilai.Name = "btnLihatNilai"
-        btnLihatNilai.Size = New Size(390, 128)
+        btnLihatNilai.Size = New Size(210, 60)
         btnLihatNilai.TabIndex = 5
         btnLihatNilai.Text = "Lihat Nilai"
         btnLihatNilai.UseVisualStyleBackColor = False
@@ -125,10 +122,10 @@ Partial Class FormDashboard
         btnLogout.FlatStyle = FlatStyle.Flat
         btnLogout.Font = New Font("Segoe UI", 9.0F)
         btnLogout.ForeColor = Color.FromArgb(CByte(211), CByte(47), CByte(47))
-        btnLogout.Location = New Point(1024, 512)
-        btnLogout.Margin = New Padding(5)
+        btnLogout.Location = New Point(559, 239)
+        btnLogout.Margin = New Padding(3, 2, 3, 2)
         btnLogout.Name = "btnLogout"
-        btnLogout.Size = New Size(341, 64)
+        btnLogout.Size = New Size(184, 30)
         btnLogout.TabIndex = 4
         btnLogout.Text = "Logout"
         btnLogout.UseVisualStyleBackColor = False
@@ -141,10 +138,10 @@ Partial Class FormDashboard
         btnMasterData.FlatStyle = FlatStyle.Flat
         btnMasterData.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         btnMasterData.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
-        btnMasterData.Location = New Point(98, 272)
-        btnMasterData.Margin = New Padding(5)
+        btnMasterData.Location = New Point(53, 128)
+        btnMasterData.Margin = New Padding(3, 2, 3, 2)
         btnMasterData.Name = "btnMasterData"
-        btnMasterData.Size = New Size(390, 128)
+        btnMasterData.Size = New Size(210, 60)
         btnMasterData.TabIndex = 3
         btnMasterData.Text = "Master Data && Pengaturan (Admin)"
         btnMasterData.UseVisualStyleBackColor = False
@@ -157,10 +154,10 @@ Partial Class FormDashboard
         btnRekap.FlatStyle = FlatStyle.Flat
         btnRekap.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         btnRekap.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
-        btnRekap.Location = New Point(975, 96)
-        btnRekap.Margin = New Padding(5)
+        btnRekap.Location = New Point(525, 45)
+        btnRekap.Margin = New Padding(3, 2, 3, 2)
         btnRekap.Name = "btnRekap"
-        btnRekap.Size = New Size(390, 128)
+        btnRekap.Size = New Size(210, 60)
         btnRekap.TabIndex = 2
         btnRekap.Text = "Rekap && Monitoring "
         btnRekap.UseVisualStyleBackColor = False
@@ -173,12 +170,12 @@ Partial Class FormDashboard
         btnVerifikasi.FlatStyle = FlatStyle.Flat
         btnVerifikasi.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         btnVerifikasi.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
-        btnVerifikasi.Location = New Point(536, 96)
-        btnVerifikasi.Margin = New Padding(5)
+        btnVerifikasi.Location = New Point(289, 45)
+        btnVerifikasi.Margin = New Padding(3, 2, 3, 2)
         btnVerifikasi.Name = "btnVerifikasi"
-        btnVerifikasi.Size = New Size(390, 128)
+        btnVerifikasi.Size = New Size(210, 60)
         btnVerifikasi.TabIndex = 1
-        btnVerifikasi.Text = "Verifikasi Penilaian (KPS)"
+        btnVerifikasi.Text = "Verifikasi Penilaian"
         btnVerifikasi.UseVisualStyleBackColor = False
         ' 
         ' btnIsiPenilaian
@@ -189,25 +186,25 @@ Partial Class FormDashboard
         btnIsiPenilaian.FlatStyle = FlatStyle.Flat
         btnIsiPenilaian.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         btnIsiPenilaian.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
-        btnIsiPenilaian.Location = New Point(98, 96)
-        btnIsiPenilaian.Margin = New Padding(5)
+        btnIsiPenilaian.Location = New Point(53, 45)
+        btnIsiPenilaian.Margin = New Padding(3, 2, 3, 2)
         btnIsiPenilaian.Name = "btnIsiPenilaian"
-        btnIsiPenilaian.Size = New Size(390, 128)
+        btnIsiPenilaian.Size = New Size(210, 60)
         btnIsiPenilaian.TabIndex = 0
         btnIsiPenilaian.Text = "Isi Penilaian Perilaku Dosen"
         btnIsiPenilaian.UseVisualStyleBackColor = False
         ' 
         ' FormDashboard
         ' 
-        AutoScaleDimensions = New SizeF(13.0F, 32.0F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(244), CByte(238), CByte(230))
-        ClientSize = New Size(1462, 800)
+        ClientSize = New Size(795, 375)
         Controls.Add(pnlButtons)
         Controls.Add(pnlTop)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         FormBorderStyle = FormBorderStyle.FixedDialog
-        Margin = New Padding(5)
+        Margin = New Padding(3, 2, 3, 2)
         MaximizeBox = False
         Name = "FormDashboard"
         StartPosition = FormStartPosition.CenterScreen

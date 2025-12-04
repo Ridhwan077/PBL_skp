@@ -3,10 +3,90 @@ Imports MySql.Data.MySqlClient
 
 
 Public Class FormLogin
-
     Private Sub FormLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Biar halus
-        Me.DoubleBuffered = True
+        Try
+            If My.Settings.RememberMe Then
+                txtUsername.Text = My.Settings.LastUsername
+                chkRemember.Checked = True
+            End If
+        Catch
+        End Try
+    End Sub
+    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+        Dim username As String = txtUsername.Text.Trim()
+        Dim password As String = txtPassword.Text
+
+        If username = "" OrElse password = "" Then
+            MessageBox.Show("Username dan Password harus diisi.",
+                        "Validasi",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning)
+            txtPassword.Clear()
+            txtPassword.Focus()
+            Exit Sub
+        End If
+
+        Dim row As DataRow = GetUserInfo(username, password)
+
+        If row Is Nothing Then
+            MessageBox.Show("Username atau password salah.",
+                        "Login Gagal",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error)
+            txtPassword.Clear()
+            txtPassword.Focus()
+            Exit Sub
+        End If
+
+        ' === Session diisi di sini ===
+        CurrentUserId = CInt(row("id"))
+        CurrentUsername = row("username").ToString()
+        CurrentUserRole = row("role").ToString()
+        If row.Table.Columns.Contains("periode") AndAlso Not IsDBNull(row("periode")) Then
+            CurrentPeriode = row("periode").ToString()
+        Else
+            CurrentPeriode = ""   ' atau "Belum diatur"
+        End If
+
+        ApplyRememberMe(username)
+
+        ' Buka dashboard
+        Dim dash As New FormDashboard()
+        Me.Hide()
+        dash.Show()
+    End Sub
+    Private Sub ApplyRememberMe(username As String)
+        Try
+            If chkRemember.Checked Then
+                My.Settings.LastUsername = username
+                My.Settings.RememberMe = True
+            Else
+                My.Settings.LastUsername = ""
+                My.Settings.RememberMe = False
+            End If
+            My.Settings.Save()
+        Catch
+        End Try
+    End Sub
+
+    Private Sub OpenDashboardByRole(role As String)
+        Dim nextForm As New FormDashboard()
+        Me.Hide()
+        nextForm.Show()
+    End Sub
+
+    Private Sub LnkSignupClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) _
+        Handles lnkSignup.LinkClicked
+
+        ' Contoh: buka form registrasi dosen
+        Dim frm As New FormRegistrasiDosen()
+        frm.ShowDialog()
+    End Sub
+
+    Private Sub lnkForgot_Clicked(sender As Object, e As LinkLabelLinkClickedEventArgs) _
+        Handles lnkForgot.LinkClicked
+        MessageBox.Show("Silakan hubungi admin untuk reset password.",
+                        "Lupa Password", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub pnlLeft_Paint(sender As Object, e As PaintEventArgs) Handles pnlLeft.Paint
@@ -45,24 +125,6 @@ Public Class FormLogin
         Using brush As New SolidBrush(Color.FromArgb(90, 232, 223, 202)) ' alpha + #e8dfca
             g.FillPath(brush, path)
         End Using
-    End Sub
-
-    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        Dim username As String = txtUsername.Text
-        Dim password As String = txtPassword.Text
-
-        Dim userRole As String = GetRole(username, password)
-
-
-        If userRole IsNot Nothing Then
-            Dim namaAsli As String = txtUsername.Text
-            Dim periode As String = "2024/2025"
-            Dim dash As New FormDashboard(namaAsli, userRole, periode)
-            dash.Show()
-            Me.Hide()
-        Else
-            MessageBox.Show("Username atau password salah")
-        End If
     End Sub
 
     Private Sub lnkSignup_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lnkSignup.LinkClicked

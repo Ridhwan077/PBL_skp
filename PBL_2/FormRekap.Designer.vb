@@ -67,17 +67,17 @@ Partial Class FormRekap
         pnlHeader.Controls.Add(lblTitle)
         pnlHeader.Dock = DockStyle.Top
         pnlHeader.Location = New Point(0, 0)
-        pnlHeader.Margin = New Padding(5, 6, 5, 6)
         pnlHeader.Name = "pnlHeader"
-        pnlHeader.Padding = New Padding(29, 34, 29, 34)
-        pnlHeader.Size = New Size(1857, 309)
+        pnlHeader.Padding = New Padding(16, 16, 16, 16)
+        pnlHeader.Size = New Size(1000, 145)
         pnlHeader.TabIndex = 3
         ' 
         ' btnRefresh
         ' 
-        btnRefresh.Location = New Point(1669, 179)
+        btnRefresh.Location = New Point(899, 84)
+        btnRefresh.Margin = New Padding(2, 1, 2, 1)
         btnRefresh.Name = "btnRefresh"
-        btnRefresh.Size = New Size(139, 93)
+        btnRefresh.Size = New Size(75, 44)
         btnRefresh.TabIndex = 13
         btnRefresh.Text = "🔁" & vbCrLf & "Refresh" & vbCrLf
         btnRefresh.UseVisualStyleBackColor = True
@@ -85,17 +85,19 @@ Partial Class FormRekap
         ' cboNamaDosen
         ' 
         cboNamaDosen.FormattingEnabled = True
-        cboNamaDosen.Location = New Point(205, 122)
+        cboNamaDosen.Location = New Point(110, 57)
+        cboNamaDosen.Margin = New Padding(2, 1, 2, 1)
         cboNamaDosen.Name = "cboNamaDosen"
-        cboNamaDosen.Size = New Size(481, 40)
+        cboNamaDosen.Size = New Size(261, 23)
         cboNamaDosen.TabIndex = 12
         ' 
         ' cboPeriode
         ' 
         cboPeriode.FormattingEnabled = True
-        cboPeriode.Location = New Point(841, 197)
+        cboPeriode.Location = New Point(453, 92)
+        cboPeriode.Margin = New Padding(2, 1, 2, 1)
         cboPeriode.Name = "cboPeriode"
-        cboPeriode.Size = New Size(314, 40)
+        cboPeriode.Size = New Size(171, 23)
         cboPeriode.TabIndex = 11
         ' 
         ' lblPeriode
@@ -103,10 +105,9 @@ Partial Class FormRekap
         lblPeriode.AutoSize = True
         lblPeriode.Font = New Font("Segoe UI", 9F)
         lblPeriode.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblPeriode.Location = New Point(737, 197)
-        lblPeriode.Margin = New Padding(5, 0, 5, 0)
+        lblPeriode.Location = New Point(397, 92)
         lblPeriode.Name = "lblPeriode"
-        lblPeriode.Size = New Size(94, 32)
+        lblPeriode.Size = New Size(47, 15)
         lblPeriode.TabIndex = 7
         lblPeriode.Text = "Periode"
         ' 
@@ -114,11 +115,10 @@ Partial Class FormRekap
         ' 
         txtProdi.BorderStyle = BorderStyle.FixedSingle
         txtProdi.Font = New Font("Segoe UI", 9F)
-        txtProdi.Location = New Point(205, 190)
-        txtProdi.Margin = New Padding(5, 6, 5, 6)
+        txtProdi.Location = New Point(110, 89)
         txtProdi.Name = "txtProdi"
         txtProdi.ReadOnly = True
-        txtProdi.Size = New Size(481, 39)
+        txtProdi.Size = New Size(260, 23)
         txtProdi.TabIndex = 6
         ' 
         ' lblProdi
@@ -126,10 +126,9 @@ Partial Class FormRekap
         lblProdi.AutoSize = True
         lblProdi.Font = New Font("Segoe UI", 9F)
         lblProdi.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblProdi.Location = New Point(29, 190)
-        lblProdi.Margin = New Padding(5, 0, 5, 0)
+        lblProdi.Location = New Point(16, 89)
         lblProdi.Name = "lblProdi"
-        lblProdi.Size = New Size(165, 32)
+        lblProdi.Size = New Size(83, 15)
         lblProdi.TabIndex = 5
         lblProdi.Text = "Program Studi"
         ' 
@@ -137,11 +136,10 @@ Partial Class FormRekap
         ' 
         txtNip.BorderStyle = BorderStyle.FixedSingle
         txtNip.Font = New Font("Segoe UI", 9F)
-        txtNip.Location = New Point(841, 125)
-        txtNip.Margin = New Padding(5, 6, 5, 6)
+        txtNip.Location = New Point(453, 59)
         txtNip.Name = "txtNip"
         txtNip.ReadOnly = True
-        txtNip.Size = New Size(314, 39)
+        txtNip.Size = New Size(170, 23)
         txtNip.TabIndex = 4
         ' 
         ' lblNip
@@ -149,10 +147,9 @@ Partial Class FormRekap
         lblNip.AutoSize = True
         lblNip.Font = New Font("Segoe UI", 9F)
         lblNip.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblNip.Location = New Point(737, 127)
-        lblNip.Margin = New Padding(5, 0, 5, 0)
+        lblNip.Location = New Point(397, 60)
         lblNip.Name = "lblNip"
-        lblNip.Size = New Size(51, 32)
+        lblNip.Size = New Size(26, 15)
         lblNip.TabIndex = 3
         lblNip.Text = "NIP"
         ' 
@@ -161,10 +158,9 @@ Partial Class FormRekap
         lblNamaDosen.AutoSize = True
         lblNamaDosen.Font = New Font("Segoe UI", 9F)
         lblNamaDosen.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblNamaDosen.Location = New Point(29, 122)
-        lblNamaDosen.Margin = New Padding(5, 0, 5, 0)
+        lblNamaDosen.Location = New Point(16, 57)
         lblNamaDosen.Name = "lblNamaDosen"
-        lblNamaDosen.Size = New Size(152, 32)
+        lblNamaDosen.Size = New Size(75, 15)
         lblNamaDosen.TabIndex = 1
         lblNamaDosen.Text = "Nama Dosen"
         ' 
@@ -173,10 +169,9 @@ Partial Class FormRekap
         lblTitle.Dock = DockStyle.Top
         lblTitle.Font = New Font("Segoe UI Semibold", 14F, FontStyle.Bold)
         lblTitle.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblTitle.Location = New Point(29, 34)
-        lblTitle.Margin = New Padding(5, 0, 5, 0)
+        lblTitle.Location = New Point(16, 16)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(1799, 64)
+        lblTitle.Size = New Size(968, 30)
         lblTitle.TabIndex = 0
         lblTitle.Text = "VALIDASI PENILAIAN KINERJA DOSEN"
         lblTitle.TextAlign = ContentAlignment.MiddleLeft
@@ -213,15 +208,14 @@ Partial Class FormRekap
         dgvRekap.Dock = DockStyle.Fill
         dgvRekap.EnableHeadersVisualStyles = False
         dgvRekap.GridColor = Color.FromArgb(CByte(207), CByte(208), CByte(200))
-        dgvRekap.Location = New Point(0, 309)
-        dgvRekap.Margin = New Padding(5, 6, 5, 6)
+        dgvRekap.Location = New Point(0, 145)
         dgvRekap.MultiSelect = False
         dgvRekap.Name = "dgvRekap"
         dgvRekap.RowHeadersVisible = False
         dgvRekap.RowHeadersWidth = 51
         dgvRekap.RowTemplate.Height = 26
         dgvRekap.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvRekap.Size = New Size(1857, 971)
+        dgvRekap.Size = New Size(1000, 352)
         dgvRekap.TabIndex = 4
         ' 
         ' colNo
@@ -271,20 +265,20 @@ Partial Class FormRekap
         pnlFooter.Controls.Add(btnSimpan)
         pnlFooter.Controls.Add(btnSetFinal)
         pnlFooter.Dock = DockStyle.Bottom
-        pnlFooter.Location = New Point(0, 1173)
-        pnlFooter.Margin = New Padding(5, 6, 5, 6)
+        pnlFooter.Location = New Point(0, 447)
         pnlFooter.Name = "pnlFooter"
-        pnlFooter.Padding = New Padding(29, 18, 29, 18)
-        pnlFooter.Size = New Size(1857, 107)
+        pnlFooter.Padding = New Padding(16, 8, 16, 8)
+        pnlFooter.Size = New Size(1000, 50)
         pnlFooter.TabIndex = 5
         ' 
         ' btnValidasi
         ' 
         btnValidasi.BackColor = Color.SkyBlue
         btnValidasi.ForeColor = Color.White
-        btnValidasi.Location = New Point(1453, 17)
+        btnValidasi.Location = New Point(782, 8)
+        btnValidasi.Margin = New Padding(2, 1, 2, 1)
         btnValidasi.Name = "btnValidasi"
-        btnValidasi.Size = New Size(319, 69)
+        btnValidasi.Size = New Size(172, 32)
         btnValidasi.TabIndex = 3
         btnValidasi.Text = "Validasi"
         btnValidasi.UseVisualStyleBackColor = False
@@ -297,10 +291,9 @@ Partial Class FormRekap
         btnTutup.FlatStyle = FlatStyle.Flat
         btnTutup.Font = New Font("Segoe UI", 9F)
         btnTutup.ForeColor = Color.FromArgb(CByte(211), CByte(47), CByte(47))
-        btnTutup.Location = New Point(58, 13)
-        btnTutup.Margin = New Padding(5, 6, 5, 6)
+        btnTutup.Location = New Point(31, 6)
         btnTutup.Name = "btnTutup"
-        btnTutup.Size = New Size(167, 59)
+        btnTutup.Size = New Size(90, 28)
         btnTutup.TabIndex = 0
         btnTutup.Text = "Tutup"
         btnTutup.UseVisualStyleBackColor = False
@@ -313,10 +306,9 @@ Partial Class FormRekap
         btnSimpan.FlatStyle = FlatStyle.Flat
         btnSimpan.Font = New Font("Segoe UI", 9F)
         btnSimpan.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        btnSimpan.Location = New Point(2761, 13)
-        btnSimpan.Margin = New Padding(5, 6, 5, 6)
+        btnSimpan.Location = New Point(1487, 6)
         btnSimpan.Name = "btnSimpan"
-        btnSimpan.Size = New Size(205, 59)
+        btnSimpan.Size = New Size(110, 28)
         btnSimpan.TabIndex = 1
         btnSimpan.Text = "Simpan Draft"
         btnSimpan.UseVisualStyleBackColor = False
@@ -329,22 +321,22 @@ Partial Class FormRekap
         btnSetFinal.FlatStyle = FlatStyle.Flat
         btnSetFinal.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnSetFinal.ForeColor = Color.White
-        btnSetFinal.Location = New Point(2983, 13)
-        btnSetFinal.Margin = New Padding(5, 6, 5, 6)
+        btnSetFinal.Location = New Point(1606, 6)
         btnSetFinal.Name = "btnSetFinal"
-        btnSetFinal.Size = New Size(471, 59)
+        btnSetFinal.Size = New Size(254, 28)
         btnSetFinal.TabIndex = 2
         btnSetFinal.Text = "Simpan dan Set Nilai FINAL"
         btnSetFinal.UseVisualStyleBackColor = False
         ' 
         ' FormRekap
         ' 
-        AutoScaleDimensions = New SizeF(13F, 32F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1857, 1280)
+        ClientSize = New Size(1000, 497)
         Controls.Add(pnlFooter)
         Controls.Add(dgvRekap)
         Controls.Add(pnlHeader)
+        Margin = New Padding(2, 1, 2, 1)
         Name = "FormRekap"
         Text = "FormRekap"
         pnlHeader.ResumeLayout(False)

@@ -60,114 +60,104 @@ Partial Class FormPenilaianPerilakuDosen
         pnlHeader.Controls.Add(lblTitle)
         pnlHeader.Dock = DockStyle.Top
         pnlHeader.Location = New Point(0, 0)
-        pnlHeader.Margin = New Padding(5, 6, 5, 6)
         pnlHeader.Name = "pnlHeader"
-        pnlHeader.Padding = New Padding(29, 34, 29, 34)
-        pnlHeader.Size = New Size(1857, 299)
+        pnlHeader.Padding = New Padding(16, 16, 16, 16)
+        pnlHeader.Size = New Size(1056, 140)
         pnlHeader.TabIndex = 0
         ' 
         ' cboNamaDosen
         ' 
         cboNamaDosen.DropDownStyle = ComboBoxStyle.DropDownList
-        cboNamaDosen.Font = New Font("Segoe UI", 9F)
+        cboNamaDosen.Font = New Font("Segoe UI", 9.0F)
         cboNamaDosen.FormattingEnabled = True
-        cboNamaDosen.Location = New Point(223, 125)
-        cboNamaDosen.Margin = New Padding(5, 6, 5, 6)
+        cboNamaDosen.Location = New Point(120, 59)
         cboNamaDosen.Name = "cboNamaDosen"
-        cboNamaDosen.Size = New Size(519, 40)
+        cboNamaDosen.Size = New Size(281, 23)
         cboNamaDosen.TabIndex = 10
         ' 
         ' cboProgramStudi
         ' 
         cboProgramStudi.DropDownStyle = ComboBoxStyle.DropDownList
-        cboProgramStudi.Font = New Font("Segoe UI", 9F)
+        cboProgramStudi.Font = New Font("Segoe UI", 9.0F)
         cboProgramStudi.FormattingEnabled = True
         cboProgramStudi.Items.AddRange(New Object() {"TI", "TMD", "TMJ"})
-        cboProgramStudi.Location = New Point(223, 197)
-        cboProgramStudi.Margin = New Padding(5, 6, 5, 6)
+        cboProgramStudi.Location = New Point(120, 92)
         cboProgramStudi.Name = "cboProgramStudi"
-        cboProgramStudi.Size = New Size(519, 40)
+        cboProgramStudi.Size = New Size(281, 23)
         cboProgramStudi.TabIndex = 9
         ' 
         ' lblPeriode
         ' 
         lblPeriode.AutoSize = True
-        lblPeriode.Font = New Font("Segoe UI", 9F)
+        lblPeriode.Font = New Font("Segoe UI", 9.0F)
         lblPeriode.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblPeriode.Location = New Point(780, 205)
-        lblPeriode.Margin = New Padding(5, 0, 5, 0)
+        lblPeriode.Location = New Point(420, 96)
         lblPeriode.Name = "lblPeriode"
-        lblPeriode.Size = New Size(94, 32)
+        lblPeriode.Size = New Size(47, 15)
         lblPeriode.TabIndex = 7
         lblPeriode.Text = "Periode"
         ' 
         ' cboPeriode
         ' 
         cboPeriode.DropDownStyle = ComboBoxStyle.DropDownList
-        cboPeriode.Font = New Font("Segoe UI", 9F)
+        cboPeriode.Font = New Font("Segoe UI", 9.0F)
         cboPeriode.FormattingEnabled = True
         cboPeriode.Items.AddRange(New Object() {"2024/2025", "2025/2026"})
-        cboPeriode.Location = New Point(879, 197)
-        cboPeriode.Margin = New Padding(5, 6, 5, 6)
+        cboPeriode.Location = New Point(473, 92)
         cboPeriode.Name = "cboPeriode"
-        cboPeriode.Size = New Size(368, 40)
+        cboPeriode.Size = New Size(200, 23)
         cboPeriode.TabIndex = 8
         ' 
         ' lblProdi
         ' 
         lblProdi.AutoSize = True
-        lblProdi.Font = New Font("Segoe UI", 9F)
+        lblProdi.Font = New Font("Segoe UI", 9.0F)
         lblProdi.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblProdi.Location = New Point(37, 205)
-        lblProdi.Margin = New Padding(5, 0, 5, 0)
+        lblProdi.Location = New Point(20, 96)
         lblProdi.Name = "lblProdi"
-        lblProdi.Size = New Size(165, 32)
+        lblProdi.Size = New Size(83, 15)
         lblProdi.TabIndex = 5
         lblProdi.Text = "Program Studi"
         ' 
         ' txtNip
         ' 
         txtNip.BorderStyle = BorderStyle.FixedSingle
-        txtNip.Font = New Font("Segoe UI", 9F)
-        txtNip.Location = New Point(876, 120)
-        txtNip.Margin = New Padding(5, 6, 5, 6)
+        txtNip.Font = New Font("Segoe UI", 9.0F)
+        txtNip.Location = New Point(472, 56)
         txtNip.Name = "txtNip"
-        txtNip.Size = New Size(369, 39)
+        txtNip.Size = New Size(200, 23)
         txtNip.TabIndex = 4
         ' 
         ' lblNip
         ' 
         lblNip.AutoSize = True
-        lblNip.Font = New Font("Segoe UI", 9F)
+        lblNip.Font = New Font("Segoe UI", 9.0F)
         lblNip.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblNip.Location = New Point(780, 128)
-        lblNip.Margin = New Padding(5, 0, 5, 0)
+        lblNip.Location = New Point(420, 60)
         lblNip.Name = "lblNip"
-        lblNip.Size = New Size(51, 32)
+        lblNip.Size = New Size(26, 15)
         lblNip.TabIndex = 3
         lblNip.Text = "NIP"
         ' 
         ' lblNamaDosen
         ' 
         lblNamaDosen.AutoSize = True
-        lblNamaDosen.Font = New Font("Segoe UI", 9F)
+        lblNamaDosen.Font = New Font("Segoe UI", 9.0F)
         lblNamaDosen.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblNamaDosen.Location = New Point(37, 128)
-        lblNamaDosen.Margin = New Padding(5, 0, 5, 0)
+        lblNamaDosen.Location = New Point(20, 60)
         lblNamaDosen.Name = "lblNamaDosen"
-        lblNamaDosen.Size = New Size(152, 32)
+        lblNamaDosen.Size = New Size(75, 15)
         lblNamaDosen.TabIndex = 1
         lblNamaDosen.Text = "Nama Dosen"
         ' 
         ' lblTitle
         ' 
         lblTitle.Dock = DockStyle.Top
-        lblTitle.Font = New Font("Segoe UI Semibold", 14F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI Semibold", 14.0F, FontStyle.Bold)
         lblTitle.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        lblTitle.Location = New Point(29, 34)
-        lblTitle.Margin = New Padding(5, 0, 5, 0)
+        lblTitle.Location = New Point(16, 16)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(1799, 69)
+        lblTitle.Size = New Size(1024, 32)
         lblTitle.TabIndex = 0
         lblTitle.Text = "Form Penilaian Perilaku Dosen"
         lblTitle.TextAlign = ContentAlignment.MiddleLeft
@@ -184,7 +174,7 @@ Partial Class FormPenilaianPerilakuDosen
         dgvPertanyaan.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(207), CByte(208), CByte(200))
-        DataGridViewCellStyle2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        DataGridViewCellStyle2.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         DataGridViewCellStyle2.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
         DataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(CByte(194), CByte(210), CByte(221))
         DataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
@@ -195,7 +185,7 @@ Partial Class FormPenilaianPerilakuDosen
         dgvPertanyaan.Columns.AddRange(New DataGridViewColumn() {colNo, colAspek, colPertanyaan, colSkor, colCatatan, colBukti})
         DataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = Color.White
-        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9F)
+        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9.0F)
         DataGridViewCellStyle3.ForeColor = Color.Black
         DataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(CByte(227), CByte(242), CByte(253))
         DataGridViewCellStyle3.SelectionForeColor = Color.Black
@@ -204,15 +194,14 @@ Partial Class FormPenilaianPerilakuDosen
         dgvPertanyaan.Dock = DockStyle.Fill
         dgvPertanyaan.EnableHeadersVisualStyles = False
         dgvPertanyaan.GridColor = Color.FromArgb(CByte(207), CByte(208), CByte(200))
-        dgvPertanyaan.Location = New Point(0, 299)
-        dgvPertanyaan.Margin = New Padding(5, 6, 5, 6)
+        dgvPertanyaan.Location = New Point(0, 140)
         dgvPertanyaan.MultiSelect = False
         dgvPertanyaan.Name = "dgvPertanyaan"
         dgvPertanyaan.RowHeadersVisible = False
         dgvPertanyaan.RowHeadersWidth = 51
         dgvPertanyaan.RowTemplate.Height = 26
         dgvPertanyaan.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvPertanyaan.Size = New Size(1857, 917)
+        dgvPertanyaan.Size = New Size(1056, 307)
         dgvPertanyaan.TabIndex = 1
         ' 
         ' colNo
@@ -271,11 +260,10 @@ Partial Class FormPenilaianPerilakuDosen
         pnlFooter.Controls.Add(btnSimpanDraft)
         pnlFooter.Controls.Add(btnKirimVerifikasi)
         pnlFooter.Dock = DockStyle.Bottom
-        pnlFooter.Location = New Point(0, 1216)
-        pnlFooter.Margin = New Padding(5, 6, 5, 6)
+        pnlFooter.Location = New Point(0, 447)
         pnlFooter.Name = "pnlFooter"
-        pnlFooter.Padding = New Padding(29, 18, 29, 18)
-        pnlFooter.Size = New Size(1857, 107)
+        pnlFooter.Padding = New Padding(16, 8, 16, 8)
+        pnlFooter.Size = New Size(1056, 50)
         pnlFooter.TabIndex = 2
         ' 
         ' btnBatal
@@ -284,12 +272,11 @@ Partial Class FormPenilaianPerilakuDosen
         btnBatal.BackColor = Color.White
         btnBatal.FlatAppearance.BorderColor = Color.FromArgb(CByte(211), CByte(47), CByte(47))
         btnBatal.FlatStyle = FlatStyle.Flat
-        btnBatal.Font = New Font("Segoe UI", 9F)
+        btnBatal.Font = New Font("Segoe UI", 9.0F)
         btnBatal.ForeColor = Color.FromArgb(CByte(211), CByte(47), CByte(47))
-        btnBatal.Location = New Point(37, 24)
-        btnBatal.Margin = New Padding(5, 6, 5, 6)
+        btnBatal.Location = New Point(20, 11)
         btnBatal.Name = "btnBatal"
-        btnBatal.Size = New Size(167, 59)
+        btnBatal.Size = New Size(90, 28)
         btnBatal.TabIndex = 0
         btnBatal.Text = "Batal"
         btnBatal.UseVisualStyleBackColor = False
@@ -300,12 +287,11 @@ Partial Class FormPenilaianPerilakuDosen
         btnSimpanDraft.BackColor = Color.FromArgb(CByte(207), CByte(208), CByte(200))
         btnSimpanDraft.FlatAppearance.BorderSize = 0
         btnSimpanDraft.FlatStyle = FlatStyle.Flat
-        btnSimpanDraft.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnSimpanDraft.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnSimpanDraft.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        btnSimpanDraft.Location = New Point(978, 7)
-        btnSimpanDraft.Margin = New Padding(5, 6, 5, 6)
+        btnSimpanDraft.Location = New Point(583, 3)
         btnSimpanDraft.Name = "btnSimpanDraft"
-        btnSimpanDraft.Size = New Size(470, 72)
+        btnSimpanDraft.Size = New Size(253, 34)
         btnSimpanDraft.TabIndex = 1
         btnSimpanDraft.Text = "Simpan Draft dan Simpan PDF"
         btnSimpanDraft.UseVisualStyleBackColor = False
@@ -316,26 +302,24 @@ Partial Class FormPenilaianPerilakuDosen
         btnKirimVerifikasi.BackColor = Color.SkyBlue
         btnKirimVerifikasi.FlatAppearance.BorderSize = 0
         btnKirimVerifikasi.FlatStyle = FlatStyle.Flat
-        btnKirimVerifikasi.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        btnKirimVerifikasi.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnKirimVerifikasi.ForeColor = Color.White
-        btnKirimVerifikasi.Location = New Point(1467, 7)
-        btnKirimVerifikasi.Margin = New Padding(5, 6, 5, 6)
+        btnKirimVerifikasi.Location = New Point(846, 3)
         btnKirimVerifikasi.Name = "btnKirimVerifikasi"
-        btnKirimVerifikasi.Size = New Size(353, 72)
+        btnKirimVerifikasi.Size = New Size(190, 34)
         btnKirimVerifikasi.TabIndex = 2
         btnKirimVerifikasi.Text = "Kirim untuk Verifikasi"
         btnKirimVerifikasi.UseVisualStyleBackColor = False
         ' 
         ' FormPenilaianPerilakuDosen
         ' 
-        AutoScaleDimensions = New SizeF(13F, 32F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(245), CByte(240), CByte(232))
-        ClientSize = New Size(1857, 1323)
+        ClientSize = New Size(1056, 497)
         Controls.Add(dgvPertanyaan)
         Controls.Add(pnlFooter)
         Controls.Add(pnlHeader)
-        Margin = New Padding(5, 6, 5, 6)
         Name = "FormPenilaianPerilakuDosen"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Penilaian Perilaku Dosen"
