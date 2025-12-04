@@ -120,10 +120,28 @@ Public Class DSTCalculator
             ' Return resultFallback
             
             ' --- OPSI 2: DISCOUNT EVIDENCE (COMMENTED) ---
-            ' Kurangi keyakinan masing-masing evidence sebelum kombinasi
-            ' m1.AE *= 0.9 : m1.SE *= 0.9 : m1.BE *= 0.9
-            ' m2.AE *= 0.9 : m2.SE *= 0.9 : m2.BE *= 0.9
-            ' (Lalu ulangi perhitungan ae_ae, se_se, dll dengan nilai baru)
+            ' Kurangi keyakinan masing-masing evidence dengan discount factor 0.9 (90% confidence)
+            ' Sisa 10% menjadi "uncertainty" dalam DST
+            ' 
+            ' Dim discountFactor As Double = 0.9
+            ' m1.AE *= discountFactor : m1.SE *= discountFactor : m1.BE *= discountFactor
+            ' m2.AE *= discountFactor : m2.SE *= discountFactor : m2.BE *= discountFactor
+            ' 
+            ' ' Setelah discount, hitung ulang kombinasi dengan nilai baru
+            ' ae_ae = m1.AE * m2.AE
+            ' se_se = m1.SE * m2.SE
+            ' be_be = m1.BE * m2.BE
+            ' 
+            ' ' Hitung ulang konflik dengan nilai yang sudah di-discount
+            ' conflict = 0.0
+            ' If m1.AE > 0 And m2.SE > 0 Then conflict += m1.AE * m2.SE
+            ' If m1.AE > 0 And m2.BE > 0 Then conflict += m1.AE * m2.BE
+            ' If m1.SE > 0 And m2.AE > 0 Then conflict += m1.SE * m2.AE
+            ' If m1.SE > 0 And m2.BE > 0 Then conflict += m1.SE * m2.BE
+            ' If m1.BE > 0 And m2.AE > 0 Then conflict += m1.BE * m2.AE
+            ' If m1.BE > 0 And m2.SE > 0 Then conflict += m1.BE * m2.SE
+            ' 
+            ' ' Lalu lanjutkan ke normalisasi seperti biasa dengan normFactor = 1/(1-K)
         End If
 
         ' Normalisasi dengan faktor 1/(1-K)
@@ -140,35 +158,40 @@ Public Class DSTCalculator
     Public Shared Sub Main()
         Try
             Console.WriteLine("=== Simulasi DST SKP (Skala 1-10) ===")
+            Console.WriteLine(vbCrLf & "--- Input Nilai Penilaian ---")
             
-            ' 1. Contoh Penggunaan Normalisasi
-            Console.WriteLine(vbCrLf & "--- Tahap 1: Normalisasi Input ---")
+            ' Input Self Assessment
+            Console.Write("Masukkan nilai Self Assessment (1-10): ")
+            Dim scoreSelf As Double = Double.Parse(Console.ReadLine())
             
-            ' Kasus: Self Assessment (Binary Yes -> 10.0)
-            ' Anggap rata-rata akhir 8.2
-            Dim scoreSelf As Double = 8.2 
-            Console.WriteLine($"Input Self (Rata-rata) -> Score: {scoreSelf}")
+            ' Input Admin Assessment
+            Console.Write("Masukkan nilai Admin Assessment (1-10): ")
+            Dim scoreAdmin As Double = Double.Parse(Console.ReadLine())
+            
+            ' Input KPS Assessment
+            Console.Write("Masukkan nilai KPS (1-10): ")
+            Dim scoreKPS As Double = Double.Parse(Console.ReadLine())
+            
+            Console.WriteLine(vbCrLf & "--- Hasil Input ---")
+            Console.WriteLine($"Self Score: {scoreSelf:F1}")
+            Console.WriteLine($"Admin Score: {scoreAdmin:F1}")
+            Console.WriteLine($"KPS Score: {scoreKPS:F1}")
 
-            ' Kasus: Admin (74%) -> 7.4
-            Dim rawAdminPct As Double = 74.0 
-            Dim scoreAdmin As Double = Normalization.NormalizePercentage(rawAdminPct)
-            Console.WriteLine($"Input Admin (74%) -> Score: {scoreAdmin}")
-
-            ' Kasus: KPS (Input 9.0 -> 9.0)
-            Dim rawKPS As Double = 9.0
-            Dim scoreKPS As Double = Normalization.NormalizeKPS(rawKPS)
-            Console.WriteLine($"Input KPS (9.0) -> Score: {scoreKPS}")
-
-            ' 2. Perhitungan DST
-            Console.WriteLine(vbCrLf & "--- Tahap 2: Perhitungan DST ---")
+            ' Perhitungan DST
+            Console.WriteLine(vbCrLf & "--- Tahap Perhitungan DST ---")
             Dim keputusan As String = CalculateFinalDecision(scoreSelf, scoreAdmin, scoreKPS)
             
-            Console.WriteLine("--------------------------------")
+            Console.WriteLine("================================")
             Console.WriteLine($"Keputusan Akhir: {keputusan}")
-            Console.WriteLine("--------------------------------")
+            Console.WriteLine("================================")
+            
+            ' Tahan layar agar tidak langsung tertutup
+            Console.WriteLine(vbCrLf & "Tekan Enter untuk keluar...")
+            Console.ReadLine()
 
         Catch ex As Exception
             Console.WriteLine($"Error: {ex.Message}")
+            Console.ReadLine()
         End Try
     End Sub
 
