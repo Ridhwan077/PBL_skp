@@ -52,4 +52,8 @@ Public Class FormVerifikasiPenilaian
     Private Sub btnTutup_Click(sender As Object, e As EventArgs) Handles btnTutup.Click
 
     End Sub
+
+    Private Sub btnSetFinal_Click(sender As Object, e As EventArgs) Handles btnSetFinal.Click
+
+    End Sub
 End Class

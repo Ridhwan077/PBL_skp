@@ -14,35 +14,35 @@ Public Class DSTCalculator
     End Structure
 
     ''' <summary>
-    ''' Mengkonversi skor mentah (1-100) menjadi BPA.
+    ''' Mengkonversi skor mentah (1-10) menjadi BPA.
     ''' </summary>
     Private Shared Function GetBPA(ByVal score As Double) As BPA
         Dim result As New BPA()
 
-        If score <= 10.0 Then
-            ' Range s <= 10.0
+        If score <= 1.0 Then
+            ' Range s <= 1.0
             result.BE = 1.0
             result.SE = 0.0
             result.AE = 0.0
 
-        ElseIf score > 10.0 And score < 60.0 Then
-            ' Range 10.0 < s < 60.0 (Transisi BE -> SE)
-            ' m(BE) = (60.0 - s) / 50.0
-            result.BE = (60.0 - score) / 50.0
+        ElseIf score > 1.0 And score < 6.0 Then
+            ' Range 1.0 < s < 6.0 (Transisi BE -> SE)
+            ' m(BE) = (6.0 - s) / 5.0
+            result.BE = (6.0 - score) / 5.0
             result.SE = 1.0 - result.BE
             result.AE = 0.0
 
-        ElseIf score >= 60.0 And score < 80.0 Then
-            ' Range 60.0 <= s < 80.0 (Zona SE dengan penurunan BE)
-            ' m(SE) = (s - 60.0) / 20.0
-            result.SE = (score - 60.0) / 20.0
+        ElseIf score >= 6.0 And score < 8.0 Then
+            ' Range 6.0 <= s < 8.0 (Zona SE dengan penurunan BE)
+            ' m(SE) = (s - 6.0) / 2.0
+            result.SE = (score - 6.0) / 2.0
             result.BE = 1.0 - result.SE
             result.AE = 0.0
 
-        ElseIf score >= 80.0 Then
-            ' Range s >= 80.0 (Zona AE)
-            ' m(AE) = (s - 80.0) / 20.0
-            Dim rawAE As Double = (score - 80.0) / 20.0
+        ElseIf score >= 8.0 Then
+            ' Range s >= 8.0 (Zona AE)
+            ' m(AE) = (s - 8.0) / 2.0
+            Dim rawAE As Double = (score - 8.0) / 2.0
             If rawAE > 1.0 Then rawAE = 1.0
             
             result.AE = rawAE
@@ -88,23 +88,45 @@ Public Class DSTCalculator
     ''' Fungsi generik untuk menggabungkan dua BPA menggunakan Aturan Dempster.
     ''' </summary>
     Private Shared Function Fuse(ByVal m1 As BPA, ByVal m2 As BPA) As BPA
+        ' Hitung massa untuk kategori yang sama (non-konflik)
         Dim ae_ae As Double = m1.AE * m2.AE
         Dim se_se As Double = m1.SE * m2.SE
         Dim be_be As Double = m1.BE * m2.BE
 
-        ' Hitung Konflik (K)
+        ' Hitung Konflik (K) - hanya untuk pasangan yang disjoint dan bernilai
         Dim conflict As Double = 0.0
-        conflict += m1.AE * m2.SE
-        conflict += m1.AE * m2.BE
-        conflict += m1.SE * m2.AE
-        conflict += m1.SE * m2.BE
-        conflict += m1.BE * m2.AE
-        conflict += m1.BE * m2.SE
+        
+        ' Optimasi: hanya hitung jika kedua nilai > 0
+        If m1.AE > 0 And m2.SE > 0 Then conflict += m1.AE * m2.SE
+        If m1.AE > 0 And m2.BE > 0 Then conflict += m1.AE * m2.BE
+        If m1.SE > 0 And m2.AE > 0 Then conflict += m1.SE * m2.AE
+        If m1.SE > 0 And m2.BE > 0 Then conflict += m1.SE * m2.BE
+        If m1.BE > 0 And m2.AE > 0 Then conflict += m1.BE * m2.AE
+        If m1.BE > 0 And m2.SE > 0 Then conflict += m1.BE * m2.SE
 
-        If conflict >= 1.0 Then
-            Throw New Exception("Konflik total terjadi!")
+        ' Tampilkan konflik untuk debugging
+        Console.WriteLine($"  -> Konflik (K): {conflict:F4}")
+
+        ' Warning untuk Konflik Tinggi
+        If conflict >= 0.95 Then
+            Console.WriteLine("  WARNING: Konflik sangat tinggi! Hasil mungkin tidak reliable.")
+            
+            ' --- OPSI 1: WEIGHTED AVERAGE FALLBACK (COMMENTED) ---
+            ' Jika konflik terlalu tinggi, gunakan rata-rata sederhana
+            ' Dim resultFallback As New BPA()
+            ' resultFallback.AE = (m1.AE + m2.AE) / 2.0
+            ' resultFallback.SE = (m1.SE + m2.SE) / 2.0
+            ' resultFallback.BE = (m1.BE + m2.BE) / 2.0
+            ' Return resultFallback
+            
+            ' --- OPSI 2: DISCOUNT EVIDENCE (COMMENTED) ---
+            ' Kurangi keyakinan masing-masing evidence sebelum kombinasi
+            ' m1.AE *= 0.9 : m1.SE *= 0.9 : m1.BE *= 0.9
+            ' m2.AE *= 0.9 : m2.SE *= 0.9 : m2.BE *= 0.9
+            ' (Lalu ulangi perhitungan ae_ae, se_se, dll dengan nilai baru)
         End If
 
+        ' Normalisasi dengan faktor 1/(1-K)
         Dim normFactor As Double = 1.0 / (1.0 - conflict)
 
         Dim result As New BPA()
@@ -117,28 +139,28 @@ Public Class DSTCalculator
 
     Public Shared Sub Main()
         Try
-            Console.WriteLine("=== Simulasi DST SKP (Skala 1-100) ===")
+            Console.WriteLine("=== Simulasi DST SKP (Skala 1-10) ===")
             
             ' 1. Contoh Penggunaan Normalisasi
-            Console.WriteLine("\n--- Tahap 1: Normalisasi Input ---")
+            Console.WriteLine(vbCrLf & "--- Tahap 1: Normalisasi Input ---")
             
-            ' Kasus: Self Assessment (Binary Yes -> 100)
-            ' Anggap rata-rata akhir 82 (setara 8.2 dulu)
-            Dim scoreSelf As Double = 82.0 
+            ' Kasus: Self Assessment (Binary Yes -> 10.0)
+            ' Anggap rata-rata akhir 8.2
+            Dim scoreSelf As Double = 8.2 
             Console.WriteLine($"Input Self (Rata-rata) -> Score: {scoreSelf}")
 
-            ' Kasus: Admin (74%) -> 74.0
+            ' Kasus: Admin (74%) -> 7.4
             Dim rawAdminPct As Double = 74.0 
             Dim scoreAdmin As Double = Normalization.NormalizePercentage(rawAdminPct)
             Console.WriteLine($"Input Admin (74%) -> Score: {scoreAdmin}")
 
-            ' Kasus: KPS (Input 9.0 -> 90.0)
+            ' Kasus: KPS (Input 9.0 -> 9.0)
             Dim rawKPS As Double = 9.0
             Dim scoreKPS As Double = Normalization.NormalizeKPS(rawKPS)
             Console.WriteLine($"Input KPS (9.0) -> Score: {scoreKPS}")
 
             ' 2. Perhitungan DST
-            Console.WriteLine("\n--- Tahap 2: Perhitungan DST ---")
+            Console.WriteLine(vbCrLf & "--- Tahap 2: Perhitungan DST ---")
             Dim keputusan As String = CalculateFinalDecision(scoreSelf, scoreAdmin, scoreKPS)
             
             Console.WriteLine("--------------------------------")
