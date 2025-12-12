@@ -28,6 +28,7 @@ Partial Class FormDashboard
         btnRekap = New Button()
         btnVerifikasi = New Button()
         btnIsiPenilaian = New Button()
+        btnProfile = New Button()
         pnlTop.SuspendLayout()
         pnlButtons.SuspendLayout()
         SuspendLayout()
@@ -49,7 +50,7 @@ Partial Class FormDashboard
         ' lblSubtitle
         ' 
         lblSubtitle.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        lblSubtitle.Font = New Font("Segoe UI", 9.0F, FontStyle.Italic)
+        lblSubtitle.Font = New Font("Segoe UI", 9F, FontStyle.Italic)
         lblSubtitle.ForeColor = Color.FromArgb(CByte(230), CByte(237), CByte(247))
         lblSubtitle.Location = New Point(411, 36)
         lblSubtitle.Name = "lblSubtitle"
@@ -61,7 +62,7 @@ Partial Class FormDashboard
         ' lblUserInfo
         ' 
         lblUserInfo.AutoSize = True
-        lblUserInfo.Font = New Font("Segoe UI", 9.0F)
+        lblUserInfo.Font = New Font("Segoe UI", 9F)
         lblUserInfo.ForeColor = Color.Gainsboro
         lblUserInfo.Location = New Point(23, 39)
         lblUserInfo.Name = "lblUserInfo"
@@ -72,7 +73,7 @@ Partial Class FormDashboard
         ' lblWelcome
         ' 
         lblWelcome.AutoSize = True
-        lblWelcome.Font = New Font("Segoe UI Semibold", 14.0F, FontStyle.Bold)
+        lblWelcome.Font = New Font("Segoe UI Semibold", 14F, FontStyle.Bold)
         lblWelcome.ForeColor = Color.White
         lblWelcome.Location = New Point(21, 14)
         lblWelcome.Name = "lblWelcome"
@@ -83,6 +84,7 @@ Partial Class FormDashboard
         ' pnlButtons
         ' 
         pnlButtons.BackColor = Color.FromArgb(CByte(232), CByte(223), CByte(202))
+        pnlButtons.Controls.Add(btnProfile)
         pnlButtons.Controls.Add(btnLihatNilai)
         pnlButtons.Controls.Add(btnLogout)
         pnlButtons.Controls.Add(btnMasterData)
@@ -103,7 +105,7 @@ Partial Class FormDashboard
         btnLihatNilai.FlatAppearance.BorderColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnLihatNilai.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnLihatNilai.FlatStyle = FlatStyle.Flat
-        btnLihatNilai.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnLihatNilai.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnLihatNilai.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
         btnLihatNilai.Location = New Point(289, 128)
         btnLihatNilai.Margin = New Padding(3, 2, 3, 2)
@@ -120,7 +122,7 @@ Partial Class FormDashboard
         btnLogout.FlatAppearance.BorderColor = Color.FromArgb(CByte(211), CByte(47), CByte(47))
         btnLogout.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(255), CByte(235), CByte(238))
         btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI", 9.0F)
+        btnLogout.Font = New Font("Segoe UI", 9F)
         btnLogout.ForeColor = Color.FromArgb(CByte(211), CByte(47), CByte(47))
         btnLogout.Location = New Point(559, 239)
         btnLogout.Margin = New Padding(3, 2, 3, 2)
@@ -136,7 +138,7 @@ Partial Class FormDashboard
         btnMasterData.FlatAppearance.BorderColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnMasterData.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnMasterData.FlatStyle = FlatStyle.Flat
-        btnMasterData.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnMasterData.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnMasterData.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
         btnMasterData.Location = New Point(53, 128)
         btnMasterData.Margin = New Padding(3, 2, 3, 2)
@@ -152,7 +154,7 @@ Partial Class FormDashboard
         btnRekap.FlatAppearance.BorderColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnRekap.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnRekap.FlatStyle = FlatStyle.Flat
-        btnRekap.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnRekap.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnRekap.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
         btnRekap.Location = New Point(525, 45)
         btnRekap.Margin = New Padding(3, 2, 3, 2)
@@ -168,7 +170,7 @@ Partial Class FormDashboard
         btnVerifikasi.FlatAppearance.BorderColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnVerifikasi.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnVerifikasi.FlatStyle = FlatStyle.Flat
-        btnVerifikasi.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnVerifikasi.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnVerifikasi.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
         btnVerifikasi.Location = New Point(289, 45)
         btnVerifikasi.Margin = New Padding(3, 2, 3, 2)
@@ -184,7 +186,7 @@ Partial Class FormDashboard
         btnIsiPenilaian.FlatAppearance.BorderColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnIsiPenilaian.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
         btnIsiPenilaian.FlatStyle = FlatStyle.Flat
-        btnIsiPenilaian.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
+        btnIsiPenilaian.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
         btnIsiPenilaian.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
         btnIsiPenilaian.Location = New Point(53, 45)
         btnIsiPenilaian.Margin = New Padding(3, 2, 3, 2)
@@ -194,9 +196,25 @@ Partial Class FormDashboard
         btnIsiPenilaian.Text = "Isi Penilaian Perilaku Dosen"
         btnIsiPenilaian.UseVisualStyleBackColor = False
         ' 
+        ' btnProfile
+        ' 
+        btnProfile.BackColor = Color.White
+        btnProfile.FlatAppearance.BorderColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
+        btnProfile.FlatAppearance.MouseOverBackColor = Color.FromArgb(CByte(203), CByte(220), CByte(235))
+        btnProfile.FlatStyle = FlatStyle.Flat
+        btnProfile.Font = New Font("Segoe UI Semibold", 10F, FontStyle.Bold)
+        btnProfile.ForeColor = Color.FromArgb(CByte(25), CByte(59), CByte(104))
+        btnProfile.Location = New Point(525, 128)
+        btnProfile.Margin = New Padding(3, 2, 3, 2)
+        btnProfile.Name = "btnProfile"
+        btnProfile.Size = New Size(210, 60)
+        btnProfile.TabIndex = 6
+        btnProfile.Text = "Edit Profile"
+        btnProfile.UseVisualStyleBackColor = False
+        ' 
         ' FormDashboard
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(244), CByte(238), CByte(230))
         ClientSize = New Size(795, 375)
@@ -227,5 +245,6 @@ Partial Class FormDashboard
     Friend WithEvents btnMasterData As System.Windows.Forms.Button
     Friend WithEvents btnLogout As System.Windows.Forms.Button
     Friend WithEvents btnLihatNilai As Button
+    Friend WithEvents btnProfile As Button
 
 End Class

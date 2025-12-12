@@ -68,8 +68,8 @@ Partial Class FormRekap
         pnlHeader.Dock = DockStyle.Top
         pnlHeader.Location = New Point(0, 0)
         pnlHeader.Name = "pnlHeader"
-        pnlHeader.Padding = New Padding(16, 16, 16, 16)
-        pnlHeader.Size = New Size(1000, 145)
+        pnlHeader.Padding = New Padding(16)
+        pnlHeader.Size = New Size(982, 145)
         pnlHeader.TabIndex = 3
         ' 
         ' btnRefresh
@@ -171,7 +171,7 @@ Partial Class FormRekap
         lblTitle.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
         lblTitle.Location = New Point(16, 16)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(968, 30)
+        lblTitle.Size = New Size(950, 30)
         lblTitle.TabIndex = 0
         lblTitle.Text = "VALIDASI PENILAIAN KINERJA DOSEN"
         lblTitle.TextAlign = ContentAlignment.MiddleLeft
@@ -215,7 +215,7 @@ Partial Class FormRekap
         dgvRekap.RowHeadersWidth = 51
         dgvRekap.RowTemplate.Height = 26
         dgvRekap.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvRekap.Size = New Size(1000, 352)
+        dgvRekap.Size = New Size(982, 352)
         dgvRekap.TabIndex = 4
         ' 
         ' colNo
@@ -268,7 +268,7 @@ Partial Class FormRekap
         pnlFooter.Location = New Point(0, 447)
         pnlFooter.Name = "pnlFooter"
         pnlFooter.Padding = New Padding(16, 8, 16, 8)
-        pnlFooter.Size = New Size(1000, 50)
+        pnlFooter.Size = New Size(982, 50)
         pnlFooter.TabIndex = 5
         ' 
         ' btnValidasi
@@ -306,7 +306,7 @@ Partial Class FormRekap
         btnSimpan.FlatStyle = FlatStyle.Flat
         btnSimpan.Font = New Font("Segoe UI", 9F)
         btnSimpan.ForeColor = Color.FromArgb(CByte(60), CByte(72), CByte(82))
-        btnSimpan.Location = New Point(1487, 6)
+        btnSimpan.Location = New Point(1469, 6)
         btnSimpan.Name = "btnSimpan"
         btnSimpan.Size = New Size(110, 28)
         btnSimpan.TabIndex = 1
@@ -321,7 +321,7 @@ Partial Class FormRekap
         btnSetFinal.FlatStyle = FlatStyle.Flat
         btnSetFinal.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnSetFinal.ForeColor = Color.White
-        btnSetFinal.Location = New Point(1606, 6)
+        btnSetFinal.Location = New Point(1588, 6)
         btnSetFinal.Name = "btnSetFinal"
         btnSetFinal.Size = New Size(254, 28)
         btnSetFinal.TabIndex = 2
@@ -332,7 +332,7 @@ Partial Class FormRekap
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1000, 497)
+        ClientSize = New Size(982, 497)
         Controls.Add(pnlFooter)
         Controls.Add(dgvRekap)
         Controls.Add(pnlHeader)

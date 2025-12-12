@@ -26,39 +26,40 @@
     ' ====================================
 
     Private Sub SetupRoleAccess()
-        ' Matikan semua tombol menu dulu
-        btnIsiPenilaian.Enabled = False
-        btnVerifikasi.Enabled = False
-        btnRekap.Enabled = False
-        btnMasterData.Enabled = False
-        btnLihatNilai.Enabled = False
+        ' Sembunyikan semua tombol menu dulu
+        btnIsiPenilaian.Visible = False
+        btnVerifikasi.Visible = False
+        btnRekap.Visible = False
+        btnMasterData.Visible = False
+        btnLihatNilai.Visible = False
 
         Dim roleNorm As String = ""
-        If CurrentUserRole IsNot Nothing Then
+        If Not String.IsNullOrWhiteSpace(CurrentUserRole) Then
             roleNorm = CurrentUserRole.Trim().ToLower()
         End If
 
         Select Case roleNorm
             Case "dosen"
                 ' Dosen: isi penilaian + lihat nilai
-                btnIsiPenilaian.Enabled = True
-                btnLihatNilai.Enabled = True
+                btnIsiPenilaian.Visible = True
+                btnLihatNilai.Visible = True
+                btnProfile.Visible = True
 
             Case "admin"
                 ' Admin: boleh isi penilaian (misal bantu input) + master data
-                btnIsiPenilaian.Enabled = True
-                btnMasterData.Enabled = True
+                btnIsiPenilaian.Visible = True
+                btnMasterData.Visible = True
 
             Case "kps"
                 ' KPS: boleh isi penilaian + verifikasi + rekap
-                btnIsiPenilaian.Enabled = True
-                btnVerifikasi.Enabled = True
-                btnRekap.Enabled = True
+                btnIsiPenilaian.Visible = True
+                'btnVerifikasi.Visible = True
+                btnRekap.Visible = True
 
-            Case "pimpinan", "Kepala Jurusan"
+            Case "pimpinan", "kajur"
                 ' Pimpinan / Kajur: verifikasi + rekap
-                btnVerifikasi.Enabled = True
-                btnRekap.Enabled = True
+                btnVerifikasi.Visible = True
+                btnRekap.Visible = True
 
             Case Else
                 ' Role lain: tidak ada akses menu
@@ -76,14 +77,19 @@
     '  EVENT HANDLER TOMBOL MENU
     ' ====================================
 
-    ' --- Isi Penilaian Perilaku Dosen (ROLE: DOSEN) ---
+    ' --- Isi Penilaian Perilaku Dosen (ROLE: DOSEN/ADMIN/KPS) ---
     Private Sub btnIsiPenilaian_Click(sender As Object, e As EventArgs) Handles btnIsiPenilaian.Click
+        If String.IsNullOrWhiteSpace(CurrentUserRole) Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
         Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
         ' izinkan: dosen, admin, kps
         If Not (roleNorm = "dosen" OrElse
-            roleNorm = "admin" OrElse
-            roleNorm = "kps") Then
+                roleNorm = "admin" OrElse
+                roleNorm = "kps") Then
 
             ShowAccessDenied()
             Exit Sub
@@ -95,6 +101,11 @@
 
     ' --- Verifikasi Penilaian (ROLE: PIMPINAN / KPS / KAJUR) ---
     Private Sub btnVerifikasi_Click(sender As Object, e As EventArgs) Handles btnVerifikasi.Click
+        If String.IsNullOrWhiteSpace(CurrentUserRole) Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
         Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
         If roleNorm <> "kps" AndAlso roleNorm <> "pimpinan" AndAlso roleNorm <> "kajur" Then
@@ -108,6 +119,11 @@
 
     ' --- Rekap & Monitoring (ROLE: PIMPINAN / KPS / KAJUR) ---
     Private Sub btnRekap_Click(sender As Object, e As EventArgs) Handles btnRekap.Click
+        If String.IsNullOrWhiteSpace(CurrentUserRole) Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
         Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
         If roleNorm <> "kps" AndAlso roleNorm <> "pimpinan" AndAlso roleNorm <> "kajur" Then
@@ -115,12 +131,17 @@
             Exit Sub
         End If
 
-        Dim f As New FormRekapMonitoring()
+        Dim f As New FormRekap()
         f.ShowDialog()
     End Sub
 
     ' --- Master Data & Pengaturan (ROLE: ADMIN) ---
     Private Sub btnMasterData_Click(sender As Object, e As EventArgs) Handles btnMasterData.Click
+        If String.IsNullOrWhiteSpace(CurrentUserRole) Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
         Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
         If roleNorm <> "admin" Then
@@ -134,14 +155,34 @@
 
     ' --- Lihat Nilai (ROLE: DOSEN) ---
     Private Sub btnLihatNilai_Click(sender As Object, e As EventArgs) Handles btnLihatNilai.Click
-        Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
+        If String.IsNullOrWhiteSpace(CurrentUserRole) Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+
+        Dim roleNorm = CurrentUserRole.Trim.ToLower
 
         If roleNorm <> "dosen" Then
             ShowAccessDenied()
             Exit Sub
         End If
 
-        Dim f As New FormLihatNilai()
+        Dim f As New FormLihatNilai
+        f.ShowDialog()
+    End Sub
+
+    ' --- Profile User (ROLE: DOSEN) ---
+    Private Sub btnProfile_Click(sender As Object, e As EventArgs) Handles btnProfile.Click
+        If String.IsNullOrWhiteSpace(CurrentUserRole) Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+        Dim roleNorm = CurrentUserRole.Trim.ToLower
+        If roleNorm <> "dosen" Then
+            ShowAccessDenied()
+            Exit Sub
+        End If
+        Dim f As New FormProfilDosen()
         f.ShowDialog()
     End Sub
 
