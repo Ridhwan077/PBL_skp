@@ -9,16 +9,39 @@
     End Sub
 
     ' ====================================
+    '  HELPER: DAFTAR SEMUA TOMBOL MENU
+    ' ====================================
+
+    Private ReadOnly Property MenuButtons As Button()
+        Get
+            Return New Button() {
+                btnIsiPenilaian,
+                btnVerifikasi,
+                btnRekap,
+                btnMasterData,
+                btnLihatNilai,
+                btnProfile
+            }
+        End Get
+    End Property
+
+    ' ====================================
     '  FORM LOAD
     ' ====================================
 
     Private Sub FormDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        MessageBox.Show($"DEBUG: {CurrentUsername} / {CurrentUserRole}")
-        ' Selalu isi dari Session, jangan cek kosong
+        ' DEBUG: bisa kamu matikan kalau sudah yakin
+        'MessageBox.Show($"DEBUG: {CurrentUsername} / {CurrentUserRole}")
+
         lblWelcome.Text = $"Selamat datang, {CurrentUsername}"
         lblUserInfo.Text = $"Role: {CurrentUserRole} | Periode aktif: {CurrentPeriode}"
 
         SetupRoleAccess()
+    End Sub
+
+    ' Kalau panel menu di-resize (atau form di-resize) → tata ulang posisi tombol
+    Private Sub pnlButtons_Resize(sender As Object, e As EventArgs) Handles pnlButtons.Resize
+        RefreshMenuLayout()
     End Sub
 
     ' ====================================
@@ -26,45 +49,97 @@
     ' ====================================
 
     Private Sub SetupRoleAccess()
-        ' Sembunyikan semua tombol menu dulu
-        btnIsiPenilaian.Visible = False
-        btnVerifikasi.Visible = False
-        btnRekap.Visible = False
-        btnMasterData.Visible = False
-        btnLihatNilai.Visible = False
+        ' Sembunyikan semua tombol dulu
+        For Each btn In MenuButtons
+            btn.Visible = False
+        Next
 
-        Dim roleNorm As String = ""
-        If Not String.IsNullOrWhiteSpace(CurrentUserRole) Then
-            roleNorm = CurrentUserRole.Trim().ToLower()
-        End If
+        Dim role As String = If(CurrentUserRole, "").Trim().ToLower()
 
-        Select Case roleNorm
+        Select Case role
             Case "dosen"
-                ' Dosen: isi penilaian + lihat nilai
                 btnIsiPenilaian.Visible = True
                 btnLihatNilai.Visible = True
                 btnProfile.Visible = True
 
             Case "admin"
-                ' Admin: boleh isi penilaian (misal bantu input) + master data
-                btnIsiPenilaian.Visible = True
-                btnMasterData.Visible = True
-
-            Case "kps"
-                ' KPS: boleh isi penilaian + verifikasi + rekap
-                btnIsiPenilaian.Visible = True
-                'btnVerifikasi.Visible = True
-                btnRekap.Visible = True
-
-            Case "pimpinan", "kajur"
-                ' Pimpinan / Kajur: verifikasi + rekap
                 btnVerifikasi.Visible = True
                 btnRekap.Visible = True
+                btnMasterData.Visible = True
+                btnLihatNilai.Visible = True
+                btnProfile.Visible = True
+
+            Case "kps"
+                btnVerifikasi.Visible = True
+                btnRekap.Visible = True
+                btnLihatNilai.Visible = True
+                btnProfile.Visible = True
+
+            Case "pimpinan", "kajur"
+                btnVerifikasi.Visible = True
+                btnRekap.Visible = True
+                btnLihatNilai.Visible = True
 
             Case Else
-                ' Role lain: tidak ada akses menu
+                ' fallback: minimal lihat nilai + profile
+                btnLihatNilai.Visible = True
+                btnProfile.Visible = True
         End Select
+
+        ' Setelah visible di-set → rapikan tata letak
+        RefreshMenuLayout()
     End Sub
+
+    ' ====================================
+    '  LAYOUT MENU DINAMIS (GRID 3 KOLOM)
+    ' ====================================
+
+    Private Sub RefreshMenuLayout()
+        ' Panel tempat semua button berada
+        Dim host As Control = pnlButtons   ' ganti jika nama panel lain
+
+        If host Is Nothing Then Return
+
+        ' Ambil hanya tombol yang Visible
+        Dim visibleButtons As New List(Of Button)()
+        For Each btn In MenuButtons
+            If btn.Visible Then
+                visibleButtons.Add(btn)
+            End If
+        Next
+
+        If visibleButtons.Count = 0 Then Return
+
+        ' Setting grid
+        Dim cols As Integer = 3                ' maksimal 3 kolom
+        Dim btnW As Integer = visibleButtons(0).Width
+        Dim btnH As Integer = visibleButtons(0).Height
+        Dim hGap As Integer = 40               ' jarak horizontal antar tombol
+        Dim vGap As Integer = 25               ' jarak vertikal antar baris
+
+        Dim colsUsed As Integer = Math.Min(cols, visibleButtons.Count)
+        Dim rows As Integer = CInt(Math.Ceiling(visibleButtons.Count / CDbl(cols)))
+
+        Dim totalW As Integer = colsUsed * btnW + (colsUsed - 1) * hGap
+        Dim totalH As Integer = rows * btnH + (rows - 1) * vGap
+
+        ' Posisi awal supaya grid berada di tengah panel
+        Dim startX As Integer = (host.ClientSize.Width - totalW) \ 2
+        Dim startY As Integer = (host.ClientSize.Height - totalH) \ 2
+
+        ' Atur posisi setiap tombol visible ke layout grid
+        For i As Integer = 0 To visibleButtons.Count - 1
+            Dim r As Integer = i \ cols
+            Dim c As Integer = i Mod cols
+
+            visibleButtons(i).Left = startX + c * (btnW + hGap)
+            visibleButtons(i).Top = startY + r * (btnH + vGap)
+        Next
+    End Sub
+
+    ' ====================================
+    '  UTIL
+    ' ====================================
 
     Private Sub ShowAccessDenied()
         MessageBox.Show("Anda tidak memiliki akses ke menu ini.",
@@ -86,11 +161,7 @@
 
         Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
-        ' izinkan: dosen, admin, kps
-        If Not (roleNorm = "dosen" OrElse
-                roleNorm = "admin" OrElse
-                roleNorm = "kps") Then
-
+        If Not (roleNorm = "dosen" OrElse roleNorm = "admin" OrElse roleNorm = "kps") Then
             ShowAccessDenied()
             Exit Sub
         End If
@@ -108,7 +179,7 @@
 
         Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
-        If roleNorm <> "kps" AndAlso roleNorm <> "pimpinan" AndAlso roleNorm <> "kajur" Then
+        If roleNorm <> "kps" AndAlso roleNorm <> "pimpinan" AndAlso roleNorm <> "kajur" AndAlso roleNorm <> "admin" Then
             ShowAccessDenied()
             Exit Sub
         End If
@@ -126,7 +197,7 @@
 
         Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
-        If roleNorm <> "kps" AndAlso roleNorm <> "pimpinan" AndAlso roleNorm <> "kajur" Then
+        If roleNorm <> "kps" AndAlso roleNorm <> "pimpinan" AndAlso roleNorm <> "kajur" AndAlso roleNorm <> "admin" Then
             ShowAccessDenied()
             Exit Sub
         End If
@@ -153,21 +224,22 @@
         f.ShowDialog()
     End Sub
 
-    ' --- Lihat Nilai (ROLE: DOSEN) ---
+    ' --- Lihat Nilai (ROLE: DOSEN, KPS, PIMPINAN, KAJUR) ---
     Private Sub btnLihatNilai_Click(sender As Object, e As EventArgs) Handles btnLihatNilai.Click
         If String.IsNullOrWhiteSpace(CurrentUserRole) Then
             ShowAccessDenied()
             Exit Sub
         End If
 
-        Dim roleNorm = CurrentUserRole.Trim.ToLower
+        Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
 
-        If roleNorm <> "dosen" Then
+        ' Kalau mau yang lain juga bisa lihat, tambahkan di sini
+        If Not (roleNorm = "dosen" OrElse roleNorm = "kps" OrElse roleNorm = "pimpinan" OrElse roleNorm = "kajur" OrElse roleNorm = "admin") Then
             ShowAccessDenied()
             Exit Sub
         End If
 
-        Dim f As New FormLihatNilai
+        Dim f As New FormLihatNilai()
         f.ShowDialog()
     End Sub
 
@@ -177,11 +249,14 @@
             ShowAccessDenied()
             Exit Sub
         End If
-        Dim roleNorm = CurrentUserRole.Trim.ToLower
+
+        Dim roleNorm As String = CurrentUserRole.Trim().ToLower()
+
         If roleNorm <> "dosen" Then
             ShowAccessDenied()
             Exit Sub
         End If
+
         Dim f As New FormProfilDosen()
         f.ShowDialog()
     End Sub
